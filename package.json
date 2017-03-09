@@ -1,0 +1,13 @@
+{
+  "name": "travigraphjs",
+  "version": "1.0.0",
+  "description": "plot travis-ci build times on the web",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "vega-lite": "https://github.com/vega/vega-lite"
+  },
+  "scripts": {
+    "build": "cp index.html dist; browserify index.js > dist/index.js"
+  }
+}
