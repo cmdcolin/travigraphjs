@@ -39,7 +39,7 @@ function graph() {;
             var spec = {
               "description": "Travis-CI builds",
               "data": { values: d },
-              "mark": "line",
+              "mark": "point",
               "encoding": {
                 "y": {"field": "duration","type": "quantitative"},
                 "x": {"field": "finished_at","type": "temporal"}
