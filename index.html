@@ -15,7 +15,7 @@
   <i>Plot the travis-CI build times of a repo using the travis-CI API</i>
   <div id="view"></div>
   <form action="#">
-    <input type="text" id="repo" value="sinatra/sinatra"></input>
+    <input type="text" id="repo" value="angular/angular"></input>
     <input type="number" id="start" value=0></input>
     <input type="number" id="end" value=1000></input>
     <button type="submit">Submit</button>
@@ -71,13 +71,14 @@ function graph(e) {
             d.map(function(r) { if(r.result==0) r.state="succeeded"; })
             d.map(function(r) { if(r.result==1) r.state="failed"; })
             d.map(function(r) { if(r.result==null) r.state="errored"; })
+            d.map(function(r) { r.duration/=60; })
             var spec = {
               "description": "Travis-CI builds",
               "data": { values: d },
               "mark": "point",
               "encoding": {
-                "y": {"field": "duration","type": "quantitative"},
-                "x": {"field": "finished_at","type": "temporal"},
+                "y": {"field": "duration","type": "quantitative", "axis": {"title": "Duration (minutes)"} },
+                "x": {"field": "finished_at","type": "temporal", "axis": {"title": "Date"} },
                 "color": {"field": "state", "type": "nominal", "scale": {"range": ["#d62728", "#ff7f0e", "#1f77b4"]}},
               },
               "width": 1000,
