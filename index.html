@@ -104,9 +104,7 @@
               d.map(function(r) { if(r.result==1) r.state="failed"; })
               d.map(function(r) { if(r.result==null) r.state="errored"; })
               d.map(function(r) { r.duration/=60; })
-              console.log(d)
               d=filterOutliers(d);
-              console.log(d)
               var spec = {
                 "description": "Travis-CI builds",
                 "data": { values: d },
