@@ -10,17 +10,41 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.0-beta.28/vega-core.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.0-alpha.8/vega-lite.js"></script>
 </head>
-<body>
+<body style="margin: 40px">
   <h1>travigraph.js</h1>
-  <i>Plot the build times of a repo using the travis-CI API</i>
-  <div style="width:500px;height:500px;" id="view"></div>
+  <i>Plot the travis-CI build times of a repo using the travis-CI API</i>
+  <div id="view"></div>
   <form action="#">
     <input type="text" id="repo" value="sinatra/sinatra"></input>
     <input type="number" id="start" value=0></input>
     <input type="number" id="end" value=1000></input>
     <button type="submit">Submit</button>
+<button type="button" data-toggle="modal" data-target="#myModal">
+  ?
+</button>
   </form>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Help</h4>
+      </div>
+      <div class="modal-body">
+          <h3>Usage</h3>
+          <p>Simply enter the user/org and repository name to look up on the Travis-CI platform, along with the start and end build numbers (use 0 and a semi-large number to get whole history, total build numbers is not known beforehand)</p>
+          <h3>Troubleshooting</h3>
+          <p>If you get errors, make sure to use capitalization-correct names of github org and repo name (github is flexible on capitalization, travis-CI is not)</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 function getParameterByName(name) {
