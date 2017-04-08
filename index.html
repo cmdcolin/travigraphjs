@@ -117,6 +117,8 @@
       var repo = document.getElementById('repo').value;
       var start = document.getElementById('start').value;
       var end = document.getElementById('end').value;
+      document.getElementById('view').innerHTML = 'Loading...';
+
       window.history.replaceState({}, "", '?repo='+repo+'&start='+start+'&end='+end);
 
 
@@ -127,6 +129,7 @@
           if(iter < +end) {
               var builds = fetch('https://api.travis-ci.org/repos/' + repo + '/builds?after_number=' + iter);
               data.push(builds)
+              document.getElementById('view').innerHTML = 'Loading build '+iter+'...';
           } else {
               clearInterval(intervalId);
               process(data)
@@ -134,7 +137,7 @@
           iter += 25;
       };
       
-      intervalId = setInterval(fetcher, 5);
+      intervalId = setInterval(fetcher, 200);
 
       e&&e.preventDefault();
   }
