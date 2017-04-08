@@ -72,8 +72,8 @@
       var iqr = q3 - q1;
 
       // Then find min and max values
-      var maxValue = q3 + iqr*1.5;
-      var minValue = q1 - iqr*1.5;
+      var maxValue = q3 + iqr*3;
+      var minValue = q1 - iqr*3;
 
       // Then filter anything beyond or beneath these values.
       var filteredValues = values.filter(function(x) {
