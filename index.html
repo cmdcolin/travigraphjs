@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <head>
-  <title>Vega Lite Bar Chart</title>
+  <title>travigraph.js</title>
   <meta charset="utf-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.4/d3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.0-beta.28/vega-core.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.0-alpha.8/vega-lite.js"></script>
 </head>
 <body>
   <h1>travigraph.js</h1>
+  <i>Plot the build times of a repo using the travis-CI API</i>
   <div style="width:500px;height:500px;" id="view"></div>
-  <input type="text" id="repo" value="sinatra/sinatra"></input>
-  <input type="number" id="start" value=0></input>
-  <input type="number" id="end" value=1000></input>
-  <button type="submit">Submit</button>
+  <form action="#">
+    <input type="text" id="repo" value="sinatra/sinatra"></input>
+    <input type="number" id="start" value=0></input>
+    <input type="number" id="end" value=1000></input>
+    <button type="submit">Submit</button>
+  </form>
 
 
 <script>
-function graph() {;
+function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+function graph(e) {
     var repo = document.getElementById('repo').value;
-    var begin = document.getElementById('start').value;
+    var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
+    window.history.replaceState({}, "", '?repo='+repo+'&start='+start+'&end='+end);
 
 
     var data = [];
-    for(var i = +begin; i < +end; i+=25) {
+    for(var i = +start; i < +end; i+=25) {
         var builds = fetch('https://api.travis-ci.org/repos/'+repo+'/builds?after_number='+i);
         data.push(builds)
     }
@@ -42,7 +50,8 @@ function graph() {;
               "mark": "point",
               "encoding": {
                 "y": {"field": "duration","type": "quantitative"},
-                "x": {"field": "finished_at","type": "temporal"}
+                "x": {"field": "finished_at","type": "temporal"},
+                "color": {"field": "state", "type": "nominal"},
               },
               "width": 1000,
               "height": 400
@@ -50,14 +59,22 @@ function graph() {;
 
 
             var vgSpec = vl.compile(spec).spec;
-            var runtime = vega.parse(vgSpec)
+            var runtime = vega.parse(vgSpec);
             var view = new vega.View(runtime).initialize(document.querySelector('#view')).run();
         });
     });
+    e&&e.preventDefault();
 }
 
-document.querySelector('button[type="submit"]').addEventListener('click',graph);
-graph()
+document.querySelector('form').addEventListener('submit',graph);
+
+var ret = getParameterByName('repo');
+if(ret) document.getElementById('repo').value = ret;
+var ret = getParameterByName('start');
+if(ret) document.getElementById('start').value = ret;
+var ret = getParameterByName('end');
+if(ret) document.getElementById('end').value = ret;
+graph();
 
 </script>
 </body>
