@@ -1,0 +1,19 @@
+{
+  "name": "travigraphjs",
+  "version": "1.0.0",
+  "description": "A simple tool to plot travis-CI build times: https://cmdcolin.github.io/travigraphjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmdcolin/travigraphjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmdcolin/travigraphjs/issues"
+  },
+  "homepage": "https://github.com/cmdcolin/travigraphjs#readme"
+}
