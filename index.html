@@ -67,7 +67,10 @@ function graph(e) {
     Promise.all(data).then(function(total_builds) {
         var json = total_builds.map(function(m) { return m.json(); })
         Promise.all(json).then(function(ret) {
-            var d = Array.prototype.concat.apply([], ret)
+            var d = Array.prototype.concat.apply([], ret);
+            d.map(function(r) { if(r.result==0) r.state="succeeded"; })
+            d.map(function(r) { if(r.result==1) r.state="failed"; })
+            d.map(function(r) { if(r.result==null) r.state="errored"; })
             var spec = {
               "description": "Travis-CI builds",
               "data": { values: d },
@@ -75,7 +78,7 @@ function graph(e) {
               "encoding": {
                 "y": {"field": "duration","type": "quantitative"},
                 "x": {"field": "finished_at","type": "temporal"},
-                "color": {"field": "state", "type": "nominal"},
+                "color": {"field": "state", "type": "nominal", "scale": {"range": ["#d62728", "#ff7f0e", "#1f77b4"]}},
               },
               "width": 1000,
               "height": 400
