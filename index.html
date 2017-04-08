@@ -83,19 +83,7 @@
       // Then return
       return filteredValues;
   }
-  function graph(e) {
-      var repo = document.getElementById('repo').value;
-      var start = document.getElementById('start').value;
-      var end = document.getElementById('end').value;
-      window.history.replaceState({}, "", '?repo='+repo+'&start='+start+'&end='+end);
-
-
-      var data = [];
-      for(var i = +start; i < +end; i+=25) {
-          var builds = fetch('https://api.travis-ci.org/repos/'+repo+'/builds?after_number='+i);
-          data.push(builds)
-      }
-
+  function process(data) {
       Promise.all(data).then(function(total_builds) {
           var json = total_builds.map(function(m) { return m.json(); })
           Promise.all(json).then(function(ret) {
@@ -124,6 +112,30 @@
               var view = new vega.View(runtime).initialize(document.querySelector('#view')).run();
           });
       });
+  }
+  function graph(e) {
+      var repo = document.getElementById('repo').value;
+      var start = document.getElementById('start').value;
+      var end = document.getElementById('end').value;
+      window.history.replaceState({}, "", '?repo='+repo+'&start='+start+'&end='+end);
+
+
+      var data = [];
+      var iter = +start;
+      var intervalId = null;
+      var fetcher = function() {
+          if(iter < +end) {
+              var builds = fetch('https://api.travis-ci.org/repos/' + repo + '/builds?after_number=' + iter);
+              data.push(builds)
+          } else {
+              clearInterval(intervalId);
+              process(data)
+          }
+          iter += 25;
+      };
+      
+      intervalId = setInterval(fetcher, 5);
+
       e&&e.preventDefault();
   }
 
