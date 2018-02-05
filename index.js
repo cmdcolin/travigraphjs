@@ -52,11 +52,12 @@ function process(data) {
                 height: 400,
             };
 
-
-            const vgSpec = vl.compile(spec).spec;
-            const runtime = vega.parse(vgSpec);
-            const view = new vega.View(runtime);
-            view.initialize(document.querySelector('#view')).run();
+          var opt = {
+                mode: "vega-lite",
+          };vegaEmbed("#view", spec, opt)
+          .then(function(result) {
+                    })
+            .catch(console.error);
         }, (error) => {
             document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
         });
