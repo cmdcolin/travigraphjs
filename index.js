@@ -25,10 +25,9 @@ function filterOutliers(someArray) {
 
 // create spec
 function process(data) {
-    Promise.all(data).then((totalBuilds) => {
-        const json = totalBuilds.map(m => m.json());
-        Promise.all(json).then((ret) => {
-            let d = Array.prototype.concat.apply([], ret);
+    Promise.all(data).then((requests) => {
+        Promise.all(requests.map(m => m.json())).then((ret) => {
+            let d = [].concat(...ret);
             if (!d.length) {
                 document.querySelector('#view').innerHTML = '<div class="alert alert-warning">Error: no results found for repository</div>';
                 return;
