@@ -1,3 +1,9 @@
+## Version 1.0.1 - February 6th, 2018
+
+### Features
+
+- Add mouseover
+
 ## Version 1.0.0 - April 8th, 2017
 
 Initial release!
