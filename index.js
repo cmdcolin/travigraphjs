@@ -1,4 +1,4 @@
-/* global vega, vl */
+/* global vega, vl, vegaTooltip, vegaEmbed */
 
 
 // stackoverflow
@@ -52,12 +52,15 @@ function process(data) {
                 height: 400,
             };
 
-          var opt = {
-                mode: "vega-lite",
-          };vegaEmbed("#view", spec, opt)
-          .then(function(result) {
-                    })
-            .catch(console.error);
+            const opt = {
+                mode: 'vega-lite',
+            };
+            vegaEmbed('#view', spec, opt).then((result) => {
+                console.log(result);
+                vegaTooltip.vegaLite(result.view, spec);
+            }).catch((error) => {
+                document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
+            });
         }, (error) => {
             document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
         });
