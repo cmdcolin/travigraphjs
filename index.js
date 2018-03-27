@@ -100,3 +100,5 @@ if (getParameterByName('start')) document.getElementById('start').value = getPar
 if (getParameterByName('end')) document.getElementById('end').value = getParameterByName('end');
 graph();
 
+
+document.getElementById('versions').innerHTML += 'vega: ' + vega.version + ' vega-lite: ' + vl.version;
