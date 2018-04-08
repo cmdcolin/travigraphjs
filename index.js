@@ -22,32 +22,13 @@ function filterOutliers(someArray) {
 
     return filteredValues;
 }
-var flattenObject = function(ob) {
-	var toReturn = {};
-	
-	for (var i in ob) {
-		if (!ob.hasOwnProperty(i)) continue;
-		
-		if ((typeof ob[i]) == 'object') {
-			var flatObject = flattenObject(ob[i]);
-			for (var x in flatObject) {
-				if (!flatObject.hasOwnProperty(x)) continue;
-				
-				toReturn[i + '.' + x] = flatObject[x];
-			}
-		} else {
-			toReturn[i] = ob[i];
-		}
-	}
-	return toReturn;
-};
+
 // create spec
 function process(data) {
     Promise.all(data).then((requests) => {
         Promise.all(requests.map(m => m.json())).then((ret) => {
             let d = [].concat(...(ret.map((m) => m.builds)));
             d = d.map((m) => {
-                console.log(m);
                 return {
                     message: m.commit.message,
                     branch: (m.branch||{}).name,
