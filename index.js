@@ -22,20 +22,45 @@ function filterOutliers(someArray) {
 
     return filteredValues;
 }
-
+var flattenObject = function(ob) {
+	var toReturn = {};
+	
+	for (var i in ob) {
+		if (!ob.hasOwnProperty(i)) continue;
+		
+		if ((typeof ob[i]) == 'object') {
+			var flatObject = flattenObject(ob[i]);
+			for (var x in flatObject) {
+				if (!flatObject.hasOwnProperty(x)) continue;
+				
+				toReturn[i + '.' + x] = flatObject[x];
+			}
+		} else {
+			toReturn[i] = ob[i];
+		}
+	}
+	return toReturn;
+};
 // create spec
 function process(data) {
     Promise.all(data).then((requests) => {
         Promise.all(requests.map(m => m.json())).then((ret) => {
             let d = [].concat(...(ret.map((m) => m.builds)));
+            d = d.map((m) => {
+                return {
+                    message: m.commit.message,
+                    branch: m.branch.name,
+                    duration: m.duration,
+                    number: m.number,
+                    finished_at: m.finished_at,
+                    state: m.state
+                }
+            });
             if (!d.length) {
                 document.querySelector('#view').innerHTML = '<div class="alert alert-warning">Error: no results found for repository</div>';
                 return;
             }
 
-            d.forEach((r) => { if (r.result === 0) r.state = 'succeeded'; });
-            d.forEach((r) => { if (r.result === 1) r.state = 'failed'; });
-            d.forEach((r) => { if (r.result === null) r.state = 'errored'; });
             d.forEach((r) => { r.duration /= 60; });
             d = filterOutliers(d);
             const spec = {
@@ -45,7 +70,7 @@ function process(data) {
                 encoding: {
                     y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
                     x: { field: 'finished_at', type: 'temporal', axis: { title: 'Date' } },
-                    color: { field: 'state', type: 'nominal', scale: { range: ['#d62728', '#ff7f0e', '#1f77b4'] } },
+                    color: { field: 'state', type: 'nominal', scale: { range: ['#d62728', '#ff7f0e', '#1f77b4', '#5ab43c'] } },
                 },
                 width: 1000,
                 height: 400,
@@ -87,7 +112,7 @@ async function graph(e) {
     const data = [];
     let limit = 100;
     let headers = new Headers({ 'Travis-API-Version': '3' });
-    let res = await fetch(`https://api.travis-ci.org/repo/${repo}/builds`, { headers: headers });
+    let res = await fetch(`https://api.travis-ci.org/repo/${repo}/builds?sort_by=id:desc`, { headers: headers });
     if(res.status == "404") {
         document.querySelector('#view').innerHTML = `<div class="alert alert-warning">Repo not found</div>`;
         return;
@@ -99,9 +124,8 @@ async function graph(e) {
     let resjs = await res.json();
     let totalBuilds = document.getElementById('end').value;
     document.querySelector('#totalBuilds').innerHTML = `Total number of builds: ${resjs.builds[0].number}`;
-    for(var i = +start; i < +end; i+=limit) {
-        console.log(i);
-        var builds = fetch(`https://api.travis-ci.org/repo/${repo}/builds?limit=${limit}&offset=${i}`, { headers: headers });
+    for(var i = +start; i <= +end; i+=limit) {
+        var builds = fetch(`https://api.travis-ci.org/repo/${repo}/builds?limit=${limit}&offset=${i}&sort_by=id`, { headers: headers });
         data.push(builds);
         document.getElementById('view').innerHTML = `Loading build ${i}...`;
         await timer(200);
