@@ -47,9 +47,10 @@ function process(data) {
         Promise.all(requests.map(m => m.json())).then((ret) => {
             let d = [].concat(...(ret.map((m) => m.builds)));
             d = d.map((m) => {
+                console.log(m);
                 return {
                     message: m.commit.message,
-                    branch: m.branch.name,
+                    branch: (m.branch||{}).name,
                     duration: m.duration,
                     number: m.number,
                     finished_at: m.finished_at,
