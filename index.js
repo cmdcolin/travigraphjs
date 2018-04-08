@@ -27,7 +27,7 @@ function filterOutliers(someArray) {
 function process(data) {
     Promise.all(data).then((requests) => {
         Promise.all(requests.map(m => m.json())).then((ret) => {
-            let d = [].concat(...ret);
+            let d = [].concat(...(ret.map((m) => m.builds)));
             if (!d.length) {
                 document.querySelector('#view').innerHTML = '<div class="alert alert-warning">Error: no results found for repository</div>';
                 return;
@@ -66,8 +66,17 @@ function process(data) {
         document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
     });
 }
-function graph(e) {
-    const repo = document.getElementById('repo').value;
+
+function timer(ms){
+     return new Promise(r=>setTimeout(r,ms));
+}
+
+async function graph(e) {
+
+    if (e) {
+        e.preventDefault();
+    }
+    const repo = encodeURIComponent(document.getElementById('repo').value);
     const start = document.getElementById('start').value;
     const end = document.getElementById('end').value;
     document.getElementById('view').innerHTML = 'Loading...';
@@ -76,21 +85,29 @@ function graph(e) {
 
 
     const data = [];
-    let iter = +start;
-    const intervalId = setInterval(() => {
-        if (iter < +end) {
-            const builds = fetch(`https://api.travis-ci.org/repos/${repo}/builds?after_number=${iter}`);
-            data.push(builds);
-            document.getElementById('view').innerHTML = `Loading build ${iter}...`;
-        } else {
-            clearInterval(intervalId);
-            process(data);
-        }
-        iter += 25;
-    }, 200);
-    if (e) {
-        e.preventDefault();
+    let limit = 100;
+    let headers = new Headers({ 'Travis-API-Version': '3' });
+    let res = await fetch(`https://api.travis-ci.org/repo/${repo}/builds`, { headers: headers });
+    if(res.status == "404") {
+        document.querySelector('#view').innerHTML = `<div class="alert alert-warning">Repo not found</div>`;
+        return;
     }
+    else if(res.status != "200") {
+        document.querySelector('#view').innerHTML = `<div class="alert alert-warning">Error ${res.status}: ${res.statusText}</div>`;
+        return;
+    }
+    let resjs = await res.json();
+    let totalBuilds = document.getElementById('end').value;
+    document.querySelector('#totalBuilds').innerHTML = `Total number of builds: ${resjs.builds[0].number}`;
+    for(var i = +start; i < +end; i+=limit) {
+        console.log(i);
+        var builds = fetch(`https://api.travis-ci.org/repo/${repo}/builds?limit=${limit}&offset=${i}`, { headers: headers });
+        data.push(builds);
+        document.getElementById('view').innerHTML = `Loading build ${i}...`;
+        await timer(200);
+    }
+    process(data);
+
 }
 
 document.querySelector('form').addEventListener('submit', graph);
