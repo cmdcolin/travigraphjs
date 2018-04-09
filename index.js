@@ -52,7 +52,7 @@ function process(data) {
                 encoding: {
                     y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
                     x: { field: 'finished_at', type: 'temporal', axis: { title: 'Date' } },
-                    color: { field: 'state', type: 'nominal', scale: { range: ['#d62728', '#ff7f0e', '#1f77b4', '#5ab43c'] } },
+                    color: { field: 'state', type: 'nominal', scale: { domain: ['failed', 'errored', 'cancelled', 'passed'], range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'] } },
                 },
                 width: 1000,
                 height: 400,
