@@ -1,11 +1,22 @@
 ## Version 1.0.2 - April 9th, 2018
 
-- One year after first release party!
-- Travis-CI v3 used
-- Better ordinal coloring of nodes
-- Uses async await
-- Grabs 100 builds at a time
+### Features
+
+- Upgraded to Travis-CI API v3 
+- Grabs 100 builds at a time instead of 25
+- Improved browser support
 - Lists total number of builds on submit
+
+### Bugfixes
+
+- Fixed coloring of statuses using ordinal domain and range
+
+### Behind the scenes upgrades
+
+- Uses async/await patterns
+- Uses webpack for more browser support
+
+
 
 ## Version 1.0.1 - February 6th, 2018
 
