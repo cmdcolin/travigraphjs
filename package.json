@@ -4,7 +4,8 @@
   "description": "A simple tool to plot travis-CI build times: https://cmdcolin.github.io/travigraphjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel index.js > built.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,14 @@
   "bugs": {
     "url": "https://github.com/cmdcolin/travigraphjs/issues"
   },
-  "homepage": "https://github.com/cmdcolin/travigraphjs#readme"
+  "homepage": "https://github.com/cmdcolin/travigraphjs#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/polyfill": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
 }

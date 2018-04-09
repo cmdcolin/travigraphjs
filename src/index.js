@@ -1,4 +1,5 @@
 /* global vegaTooltip, vegaEmbed */
+import '@babel/polyfill';
 
 
 // stackoverflow
