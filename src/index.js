@@ -22,7 +22,7 @@ function filterOutliers(someArray) {
 // create spec
 async function process(data) {
     const requests = await Promise.all(data);
-    const ret = await requests.map(m => m.json());
+    const ret = await Promise.all(requests.map(m => m.json()));
     let d = [].concat(...(ret.map(m => m.builds)));
     d = d.map(m => ({
         message: m.commit.message,
@@ -33,8 +33,7 @@ async function process(data) {
         state: m.state,
     }));
     if (!d.length) {
-        document.querySelector('#view').innerHTML = '<div class="alert alert-warning">Error: no results found for repository</div>';
-        return;
+        throw 'No results found for this repository';
     }
 
     for (let i = 0; i < d.length; i += 1) {
@@ -86,12 +85,8 @@ async function graph(e) {
     const limit = 100;
     const headers = new Headers({ 'Travis-API-Version': '3' });
     const res = await fetch(`https://api.travis-ci.org/repo/${repo}/builds?sort_by=id:desc`, { headers });
-    if (res.status === '404') {
-        document.querySelector('#view').innerHTML = '<div class="alert alert-warning">Repo not found</div>';
-        return;
-    } else if (res.status !== '200') {
-        document.querySelector('#view').innerHTML = `<div class="alert alert-warning">Error ${res.status}: ${res.statusText}</div>`;
-        return;
+    if (res.status !== 200) {
+        throw `Error ${res.status}: ${res.statusText}`;
     }
     const resjs = await res.json();
     document.querySelector('#totalBuilds').innerHTML = `Total number of builds: ${resjs.builds[0].number}`;
@@ -101,7 +96,7 @@ async function graph(e) {
         document.getElementById('view').innerHTML = `Loading build ${i}...`;
         await timer(500);
     }
-    process(data);
+    return process(data);
 }
 
 document.querySelector('form').addEventListener('submit', graph);
@@ -110,7 +105,10 @@ const params = new URLSearchParams(window.location.search.slice(1));
 if (params.get('repo')) document.getElementById('repo').value = params.get('repo');
 if (params.get('start')) document.getElementById('start').value = params.get('start');
 if (params.get('end')) document.getElementById('end').value = params.get('end');
-graph();
+
+graph().catch(error => {
+    document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
+});
 
 
 document.getElementById('versions').innerHTML += `vega: ${vega.version} vega-lite: ${vl.version}`;
