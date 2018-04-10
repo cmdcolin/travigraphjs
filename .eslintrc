@@ -5,6 +5,7 @@
     },
     "extends": "airbnb",
     "rules": {
+        "no-await-in-loop": 0,
         "indent": [
             "error",
             4
