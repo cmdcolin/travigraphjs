@@ -4,6 +4,7 @@
 
 - Upgraded to Travis-CI API v3 
 - Grabs 100 builds at a time instead of 25
+- Uses p-limit for throttling
 - Improved browser support
 - Lists total number of builds on submit
 
