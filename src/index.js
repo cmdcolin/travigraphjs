@@ -49,7 +49,7 @@ async function process(d) {
                 field: 'state',
                 type: 'nominal',
                 scale: {
-                    domain: ['failed', 'errored', 'cancelled', 'passed'],
+                    domain: ['failed', 'errored', 'canceled', 'passed'],
                     range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
                 },
             },
