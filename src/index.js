@@ -146,18 +146,22 @@ function catchgraph(e) {
 }
 
 document.querySelector('form').addEventListener('submit', catchgraph);
-document.getElementById('repo').addEventListener('change', async function() {
+document.getElementById('lookup').addEventListener('click', async function(e) {
+    if (e) {
+        e.preventDefault();
+    }
     const repo = encodeURIComponent(document.getElementById('repo').value);
     const prefix = `https://api.travis-ci.org/repo/${repo}/builds`;
     const res = await fetch(`${prefix}?sort_by=id:desc`, { headers });
     if (res.status !== 200) {
         throw new Error(`Error ${res.status}: ${res.statusText}`);
     }
-    window.history.replaceState({}, '', `?repo=${repo}&start=${start}&end=${end}`);
     const resjs = await res.json();
     const total = +resjs.builds[0].number;
+    const start = Math.max(1,total-1000);
     document.getElementById('end').value = total;
-    document.getElementById('start').value = Math.max(0, total-1000);
+    document.getElementById('start').value = start;
+    window.history.replaceState({}, '', `?repo=${repo}&start=${start}&end=${total}`);
 });
 
 const params = new URLSearchParams(window.location.search.slice(1));
