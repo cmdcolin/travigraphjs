@@ -1,5 +1,6 @@
 /* global vegaTooltip, vegaEmbed, vega, vl */
 import '@babel/polyfill';
+
 const pLimit = require('p-limit');
 
 
@@ -22,7 +23,7 @@ function filterOutliers(someArray) {
 
 // create spec
 async function process(d) {
-    d = d.map(m => ({
+    const data = d.map(m => ({
         message: (m.commit || {}).message,
         branch: (m.branch || {}).name,
         duration: m.duration,
@@ -30,17 +31,16 @@ async function process(d) {
         finished_at: m.finished_at,
         state: m.state,
     }));
-    if (!d.length) {
-        throw 'No results found for this repository';
+    if (!data.length) {
+        throw new Error('No results found for this repository');
     }
 
-    for (let i = 0; i < d.length; i += 1) {
-        d[i].duration /= 60;
+    for (let i = 0; i < data.length; i += 1) {
+        data[i].duration /= 60;
     }
-    d = filterOutliers(d);
     const spec = {
         description: 'Travis-CI builds',
-        data: { values: d },
+        data: { values: filterOutliers(data) },
         mark: 'point',
         encoding: {
             y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
@@ -63,39 +63,6 @@ async function process(d) {
     });
 }
 
-function timer(ms) {
-    return new Promise(r => setTimeout(r, ms));
-}
-function throttleActions(listOfCallableActions, limit) {
-  // We'll need to store which is the next promise in the list.
-  let i = 0;
-  let resultArray = new Array(listOfCallableActions.length);
-
-  // Now define what happens when any of the actions completes. Javascript is
-  // (mostly) single-threaded, so only one completion handler will call at a
-  // given time. Because we return doNextAction, the Promise chain continues as
-  // long as there's an action left in the list.
-  function doNextAction() {
-    if (i < listOfCallableActions.length) {
-      // Save the current value of i, so we can put the result in the right place
-      let actionIndex = i++;
-      let nextAction = listOfCallableActions[actionIndex];
-      return Promise.resolve(nextAction())
-          .then(result => {  // Save results to the correct array index.
-             resultArray[actionIndex] = result;
-             return;
-          }).then(doNextAction);
-    }
-  }
-
-  // Now start up the original <limit> number of promises.
-  // i advances in calls to doNextAction.
-  let listOfPromises = [];
-  while (i < limit && i < listOfCallableActions.length) {
-    listOfPromises.push(doNextAction());
-  }
-  return Promise.all(listOfPromises).then(() => resultArray);
-}
 
 async function graph(e) {
     if (e) {
@@ -107,36 +74,35 @@ async function graph(e) {
     document.getElementById('view').innerHTML = 'Loading...';
 
 
-
     const nBuilds = 100;
     const headers = new Headers({ 'Travis-API-Version': '3' });
     const prefix = `https://api.travis-ci.org/repo/${repo}/builds`;
     const res = await fetch(`${prefix}?sort_by=id:desc`, { headers });
     if (res.status !== 200) {
-        throw `Error ${res.status}: ${res.statusText}`;
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
     }
     window.history.replaceState({}, '', `?repo=${repo}&start=${start}&end=${end}`);
     const resjs = await res.json();
     document.querySelector('#totalBuilds').innerHTML = `Total number of builds: ${resjs.builds[0].number}`;
- 
-    let input = [];
+
+    const input = [];
     const limit = pLimit(3);
 
     for (let i = +start; i <= +end; i += nBuilds) {
         input.push(limit(() => {
             document.getElementById('view').innerHTML = `Loading build ${i}...`;
-			return fetch(`${prefix}?limit=${nBuilds}&offset=${i}&sort_by=id`, { headers })
+            return fetch(`${prefix}?limit=${nBuilds}&offset=${i}&sort_by=id`, { headers });
         }));
     }
-	 
-	const result = await Promise.all(input);
+
+    const result = await Promise.all(input);
     const ret = await Promise.all(result.map(m => m.json()));
     const builds = ret.map(m => m.builds);
     return process([].concat(...builds));
 }
 
 function catchgraph(e) {
-    graph(e).catch(error => {
+    graph(e).catch((error) => {
         document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
     });
 }
