@@ -41,21 +41,63 @@ async function process(d) {
     const spec = {
         description: 'Travis-CI builds',
         data: { values: filterOutliers(data) },
-        mark: 'point',
-        encoding: {
-            y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
-            x: { field: 'finished_at', type: 'temporal', axis: { title: 'Date' } },
-            color: {
-                field: 'state',
-                type: 'nominal',
-                scale: {
-                    domain: ['failed', 'errored', 'canceled', 'passed'],
-                    range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
+        vconcat: [
+            {
+                width: 480,
+                height: 200,
+                mark: 'point',
+                encoding: {
+                    y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
+                    x: {
+                        field: 'finished_at',
+                        type: 'temporal',
+                        axis: { title: 'Date' },
+                        scale: { domain: { selection: 'brush' } },
+                    },
+                    color: {
+                        field: 'state',
+                        type: 'nominal',
+                        scale: {
+                            domain: ['failed', 'errored', 'canceled', 'passed'],
+                            range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
+                        },
+                    },
                 },
             },
-        },
-        width: 1000,
-        height: 400,
+            {
+                width: 480,
+                height: 200,
+                mark: 'point',
+                selection: {
+                    brush: {
+                        type: 'interval',
+                        encodings: ['x'],
+                        on: '[mousedown, window:mouseup] > window:mousemove!',
+                        translate: '[mousedown, window:mouseup] > window:mousemove!',
+                        zoom: 'wheel!',
+                        mark: { fill: '#333', fillOpacity: 0.125, stroke: 'white' },
+                        resolve: 'global',
+                    },
+                },
+                encoding: {
+                    y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
+                    x: {
+                        field: 'finished_at',
+                        type: 'temporal',
+                        axis: { title: 'Date' },
+                        scale: { domain: { selection: 'brush' } },
+                    },
+                    color: {
+                        field: 'state',
+                        type: 'nominal',
+                        scale: {
+                            domain: ['failed', 'errored', 'canceled', 'passed'],
+                            range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
+                        },
+                    },
+                },
+            },
+        ],
     };
 
     vegaEmbed('#view', spec, { mode: 'vega-lite' }).then((result) => {
