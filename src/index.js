@@ -2,6 +2,7 @@
 import '@babel/polyfill';
 
 const pLimit = require('p-limit');
+const headers = new Headers({ 'Travis-API-Version': '3' });
 
 
 // stackoverflow
@@ -39,13 +40,14 @@ async function process(d) {
         data[i].duration /= 60;
     }
     const spec = {
-        description: 'Travis-CI builds',
         data: { values: filterOutliers(data) },
         vconcat: [
             {
-                width: 480,
-                height: 200,
+                description: 'Travis-CI builds (zoom view)',
+                width: 1000,
+                height: 300,
                 mark: 'point',
+                bind: "scales",
                 encoding: {
                     y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
                     x: {
@@ -65,8 +67,9 @@ async function process(d) {
                 },
             },
             {
-                width: 480,
-                height: 200,
+                description: 'Travis-CI builds (click+drag to zoom)',
+                width: 1000,
+                height: 300,
                 mark: 'point',
                 selection: {
                     brush: {
@@ -117,16 +120,8 @@ async function graph(e) {
 
 
     const nBuilds = 100;
-    const headers = new Headers({ 'Travis-API-Version': '3' });
     const prefix = `https://api.travis-ci.org/repo/${repo}/builds`;
-    const res = await fetch(`${prefix}?sort_by=id:desc`, { headers });
-    if (res.status !== 200) {
-        throw new Error(`Error ${res.status}: ${res.statusText}`);
-    }
     window.history.replaceState({}, '', `?repo=${repo}&start=${start}&end=${end}`);
-    const resjs = await res.json();
-    document.querySelector('#totalBuilds').innerHTML = `Total number of builds: ${resjs.builds[0].number}`;
-
     const input = [];
     const limit = pLimit(3);
 
@@ -146,10 +141,25 @@ async function graph(e) {
 function catchgraph(e) {
     graph(e).catch((error) => {
         document.querySelector('#view').innerHTML = `<div class="alert alert-warning">${error}</div>`;
+        console.error(error);
     });
 }
 
 document.querySelector('form').addEventListener('submit', catchgraph);
+document.getElementById('repo').addEventListener('change', async function() {
+    const repo = encodeURIComponent(document.getElementById('repo').value);
+    const prefix = `https://api.travis-ci.org/repo/${repo}/builds`;
+    const res = await fetch(`${prefix}?sort_by=id:desc`, { headers });
+    if (res.status !== 200) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+    }
+    window.history.replaceState({}, '', `?repo=${repo}&start=${start}&end=${end}`);
+    const resjs = await res.json();
+    const total = +resjs.builds[0].number;
+    document.getElementById('end').value = total;
+    document.getElementById('start').value = Math.max(0, total-1000);
+});
+
 const params = new URLSearchParams(window.location.search.slice(1));
 if (params.get('repo')) document.getElementById('repo').value = params.get('repo');
 if (params.get('start')) document.getElementById('start').value = params.get('start');
@@ -159,4 +169,4 @@ if (params.get('end')) document.getElementById('end').value = params.get('end');
 catchgraph();
 
 
-document.getElementById('versions').innerHTML += `vega: ${vega.version} vega-lite: ${vl.version}`;
+document.getElementById('versions').innerHTML = `vega: ${vega.version} vega-lite: ${vl.version}`;
