@@ -41,66 +41,33 @@ async function process(d) {
     }
     const spec = {
         data: { values: filterOutliers(data) },
-        vconcat: [
-            {
-                description: 'Travis-CI builds (zoom view)',
-                width: 1000,
-                height: 300,
-                mark: 'point',
-                bind: "scales",
-                encoding: {
-                    y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
-                    x: {
-                        field: 'finished_at',
-                        type: 'temporal',
-                        axis: { title: 'Date' },
-                        scale: { domain: { selection: 'brush' } },
-                    },
-                    color: {
-                        field: 'state',
-                        type: 'nominal',
-                        scale: {
-                            domain: ['failed', 'errored', 'canceled', 'passed'],
-                            range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
-                        },
-                    },
+        description: 'Travis-CI builds',
+        width: 1000,
+        height: 400,
+        mark: 'point',
+        "selection": {
+          "grid": {
+            "type": "interval",
+             "bind": "scales"
+          }
+        },
+        encoding: {
+            y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
+            x: {
+                field: 'finished_at',
+                type: 'temporal',
+                axis: { title: 'Date' },
+                scale: { domain: { selection: 'brush' } },
+            },
+            color: {
+                field: 'state',
+                type: 'nominal',
+                scale: {
+                    domain: ['failed', 'errored', 'canceled', 'passed'],
+                    range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
                 },
             },
-            {
-                description: 'Travis-CI builds (click+drag to zoom)',
-                width: 1000,
-                height: 300,
-                mark: 'point',
-                selection: {
-                    brush: {
-                        type: 'interval',
-                        encodings: ['x'],
-                        on: '[mousedown, window:mouseup] > window:mousemove!',
-                        translate: '[mousedown, window:mouseup] > window:mousemove!',
-                        zoom: 'wheel!',
-                        mark: { fill: '#333', fillOpacity: 0.125, stroke: 'white' },
-                        resolve: 'global',
-                    },
-                },
-                encoding: {
-                    y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
-                    x: {
-                        field: 'finished_at',
-                        type: 'temporal',
-                        axis: { title: 'Date' },
-                        scale: { domain: { selection: 'brush' } },
-                    },
-                    color: {
-                        field: 'state',
-                        type: 'nominal',
-                        scale: {
-                            domain: ['failed', 'errored', 'canceled', 'passed'],
-                            range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
-                        },
-                    },
-                },
-            },
-        ],
+        },
     };
 
     vegaEmbed('#view', spec, { mode: 'vega-lite' }).then((result) => {
