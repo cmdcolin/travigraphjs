@@ -40,39 +40,47 @@ async function process(d) {
         data[i].duration /= 60;
     }
     const spec = {
-        data: { values: filterOutliers(data) },
-        description: 'Travis-CI builds',
-        width: 1000,
-        height: 400,
-        mark: 'point',
-        "selection": {
-          "grid": {
-            "type": "interval",
-             "bind": "scales"
-          }
+        "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+        "data": {
+            "values": filterOutliers(data)
         },
-        encoding: {
-            y: { field: 'duration', type: 'quantitative', axis: { title: 'Duration (minutes)' } },
-            x: {
-                field: 'finished_at',
-                type: 'temporal',
-                axis: { title: 'Date' },
-                scale: { domain: { selection: 'brush' } },
+        "description": "Travis-CI builds",
+        "width": 1000,
+        "height": 400,
+        "mark": "point",
+        "selection": {
+            "grid": {
+                "type": "interval",
+                "bind": "scales"
+            }
+        },
+        "encoding": {
+            "y": {
+                "field": "duration",
+                "type": "quantitative",
+                "axis": {
+                    "title": "Duration (minutes)"
+                }
             },
-            color: {
-                field: 'state',
-                type: 'nominal',
-                scale: {
-                    domain: ['failed', 'errored', 'canceled', 'passed'],
-                    range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
+            "x": {
+                "field": "finished_at",
+                "type": "temporal",
+                "axis": {
+                    "title": "Date"
+                }
+            },
+            "color": {
+                "field": "state",
+                "type": "nominal",
+                "scale": {
+                    "domain": ["failed", "errored", "canceled", "passed"],
+                    "range": ["#d62728", "#ff7f0e", "#5ab43c", "#1f77b4"],
                 },
             },
         },
     };
 
-    vegaEmbed('#view', spec, { mode: 'vega-lite' }).then((result) => {
-        vegaTooltip.vegaLite(result.view, spec);
-    });
+    vegaEmbed('#view', spec, { mode: 'vega-lite' });
 }
 
 
