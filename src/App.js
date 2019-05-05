@@ -3,9 +3,19 @@ import React, { useState, useEffect } from 'react'
 import { useQueryParams, BooleanParam, StringParam, NumberParam, ArrayParam } from 'use-query-params'
 import pLimit from 'p-limit'
 import { createClassFromLiteSpec } from 'react-vega-lite'
+import AbortablePromiseCache from 'abortable-promise-cache'
+import QuickLRU from 'quick-lru'
 
 const headers = new Headers({ 'Travis-API-Version': '3' })
 const BUILDS_PER_REQUEST = 25
+
+const cache = new AbortablePromiseCache({
+  cache: new QuickLRU({ maxSize: 1000 }),
+  async fill(requestData, signal) {
+    const { url, headers } = requestData
+    return fetch(url, { headers, signal })
+  },
+})
 
 const LineChart = createClassFromLiteSpec('LineChart', {
   $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
@@ -82,11 +92,21 @@ async function getBuilds({ repo, start, end, com }) {
   const limit = pLimit(1)
 
   for (let i = start; i <= end; i += BUILDS_PER_REQUEST) {
+    const url = `${prefix}&offset=${i}&sort_by=id`
     input.push(
       limit(() => {
-        return fetch(`${prefix}&offset=${i}&sort_by=id`, { headers })
-          .then(m => m.json())
-          .then(m => m.builds)
+        return cache
+          .get(url, { url, headers })
+          .then(res => {
+            if (res.ok) {
+              return res.json()
+            } else {
+              throw new Error(`failed http status ${res.status}`)
+            }
+          })
+          .then(res => {
+            return res.builds
+          })
       }),
     )
   }
@@ -156,7 +176,7 @@ export default function App() {
 
   useEffect(() => {
     async function getData(query) {
-      setLoading(true)
+      setLoading('Loading...')
       if (query.repo) {
         const result = await getBuilds(query)
         setTimeout(() => {
