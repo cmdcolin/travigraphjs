@@ -50,6 +50,8 @@ const LineChart = createClassFromLiteSpec('LineChart', {
     },
     x: {
       field: 'finished_at',
+
+      timeUnit: 'yearmonthdate',
       type: 'temporal',
       axis: {
         title: 'Date',
