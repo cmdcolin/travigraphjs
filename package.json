@@ -55,6 +55,7 @@
     "@babel/polyfill": "^7.4.4",
     "abortable-promise-cache": "^1.0.1",
     "p-limit": "^2.2.0",
+    "prop-types": "^15.7.2",
     "quick-lru": "^4.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

@@ -1,6 +1,6 @@
-import ReactDOM from 'react-dom'
 import React, { useState, useEffect } from 'react'
-import { useQueryParams, BooleanParam, StringParam, NumberParam, ArrayParam } from 'use-query-params'
+import { useQueryParams, BooleanParam, StringParam, NumberParam } from 'use-query-params'
+import PropTypes from 'prop-types'
 import pLimit from 'p-limit'
 import { createClassFromLiteSpec } from 'react-vega-lite'
 import AbortablePromiseCache from 'abortable-promise-cache'
@@ -50,7 +50,6 @@ const LineChart = createClassFromLiteSpec('LineChart', {
     },
     x: {
       field: 'finished_at',
-
       timeUnit: 'yearmonthdate',
       type: 'temporal',
       axis: {
@@ -97,20 +96,17 @@ function RepoForm(props) {
     </form>
   )
 }
+RepoForm.propTypes = {
+  init: PropTypes.object,
+  onSubmit: PropTypes.func,
+}
 
-async function getBuilds({ repo, start, end, com }) {
-  const root = `https://api.travis-ci.${com ? 'com' : 'org'}`
-  const prefix = `${root}/repo/${encodeURIComponent(repo)}/builds?limit=${BUILDS_PER_REQUEST}`
-  const input = []
-  const limit = pLimit(1)
-
-  for (let i = start; i <= end; i += BUILDS_PER_REQUEST) {
-    const url = `${prefix}&offset=${i}&sort_by=id`
-    input.push(limit(() => cache.get(url, { url, headers })))
-  }
-
-  const result = await Promise.all(input)
-  return result.flat()
+function getBuilds({ counter, repo, start, end, com }) {
+  //prettier-ignore
+  const root = `https://api.travis-ci.${com ? 'com' : 'org'}/repo/${encodeURIComponent(repo)}/builds?limit=${BUILDS_PER_REQUEST}`
+  const offset = start + BUILDS_PER_REQUEST * counter
+  const url = `${root}&offset=${offset}&sort_by=id`
+  return offset <= end ? url : undefined
 }
 
 // stackoverflow
@@ -155,6 +151,8 @@ export default function App() {
   const [downloadedRepoData, setDownloadedRepoData] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState()
+  const [builds, setBuilds] = useState([])
+  const [counter, setCounter] = useState(0)
   const [query, setQuery] = useQueryParams({
     repo: StringParam,
     start: NumberParam,
@@ -176,23 +174,26 @@ export default function App() {
     async function getData(query) {
       try {
         if (query.repo) {
-          setLoading('Loading...')
-          const result = await getBuilds(query)
-          setTimeout(() => {
-            setLoading(false)
-            setDownloadedRepoData(process(result))
-          }, 100)
+          setLoading(`Loading...build ${counter * BUILDS_PER_REQUEST}`)
+          const url = getBuilds({ counter, ...query })
+          if (url) {
+            const result = await cache.get(url, { url, headers })
+            setCounter(counter + 1)
+            setBuilds(builds.concat(result))
+          } else {
+            setLoading(null)
+            setDownloadedRepoData(process(builds))
+          }
         }
       } catch (e) {
-        setError(e)
+        setError(e.message)
       }
     }
     getData(query)
-  }, [query])
+  }, [query, counter])
 
   const Error = props => {
     const { error } = props
-    return <p style={{ color: 'red' }}>{error.message || error}</p>
   }
   return (
     <>
@@ -204,12 +205,12 @@ export default function App() {
       <RepoForm
         init={query}
         onSubmit={res => {
-          setLoading(true)
+          setLoading('Loading...')
           setQuery(res)
         }}
       />
-      {loading && <p>Loading...</p>}
-      {error && <Error error={error} />}
+      {loading && <p>{loading}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       {downloadedRepoData && <LineChart data={downloadedRepoData} />}
       <a href="https://github.com/cmdcolin/travigraphjs/">travigraph@GitHub</a>
     </>

@@ -11,7 +11,3 @@
 
     yarn start
 
-
-## Todo
-
-Loading progress indicator
