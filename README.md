@@ -1,16 +1,17 @@
 # travigraph.js
 
-Continuing in the tradition of making more implementations of travigraph
 
 ![](img/1.png)
 
+## Install
+
+    yarn
+
 ## Build
 
-    npm install
-    npx webpack
+    yarn start
 
 
-## Other versions
+## Todo
 
-https://github.com/cmdcolin/travigraphjs
-https://github.com/cmdcolin/travigraph
+Loading progress indicator

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src",
-    "build": "webpack",
+    "build": "BABEL_ENV=production webpack",
     "start": "BABEL_ENV=development webpack-dev-server"
   },
   "repository": {
