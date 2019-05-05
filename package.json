@@ -4,7 +4,7 @@
   "description": "A simple tool to plot travis-CI build times: https://cmdcolin.github.io/travigraphjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint src",
     "build": "BABEL_ENV=production webpack",
     "start": "BABEL_ENV=development webpack-dev-server"
@@ -42,7 +42,10 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
+    "fetch-mock": "^7.3.3",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
+    "jest-canvas-mock": "^2.0.0",
     "prettier": "^1.17.0",
     "style-loader": "^0.23.1",
     "typescript": "^3.4.5",
@@ -58,9 +61,15 @@
     "quick-lru": "^4.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-hooks-async": "^2.1.0",
     "react-vega-lite": "^6.0.1",
     "tenacious-fetch": "^2.2.2",
     "use-query-params": "^0.3.2",
     "vega-lite": "^3.2.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
   }
 }

@@ -49,16 +49,6 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['packages/generator-jbrowse/**/*'],
-      env: { node: true },
-      rules: { '@typescript-eslint/no-var-requires': 'off' }
-    },
-    {
-      files: ['**/*.worker.js'],
-      globals: { self: true },
-      rules: { 'no-restricted-globals': 'off' },
-    },
-    {
       files: ['**/*.test.js'],
       env: { jest: true },
       globals: {

@@ -1,0 +1,2355 @@
+{
+  "@type": "builds",
+  "@href": "/repo/angular%2Fangular/builds?limit=25&offset=0&sort_by=id",
+  "@representation": "standard",
+  "@pagination": {
+    "limit": 25,
+    "offset": 0,
+    "count": 36043,
+    "is_first": true,
+    "is_last": false,
+    "next": {
+      "@href": "/repo/angular%2Fangular/builds?limit=25&offset=25&sort_by=id",
+      "offset": 25,
+      "limit": 25
+    },
+    "prev": null,
+    "first": {
+      "@href": "/repo/angular%2Fangular/builds?limit=25&offset=0&sort_by=id",
+      "offset": 0,
+      "limit": 25
+    },
+    "last": {
+      "@href": "/repo/angular%2Fangular/builds?limit=25&offset=36025&sort_by=id",
+      "offset": 36025,
+      "limit": 25
+    }
+  },
+  "builds": [
+    {
+      "@type": "build",
+      "@href": "/build/143343126",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143343126,
+      "number": "19247",
+      "state": "failed",
+      "duration": 2921,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "refactor(router-deprecated): avoid export of private name CanActivate",
+      "pull_request_number": 9912,
+      "started_at": "2016-07-08T14:17:55Z",
+      "finished_at": "2016-07-08T14:31:07Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40643272,
+        "sha": "c94bf345ea42dc11ab9fa3ec835afc26e6dec725",
+        "ref": "refs/pull/9912/merge",
+        "message": "refactor(router-deprecated): avoid export of private name CanActivate\n\n`router-deprecated/src/lifecycle/lifecycle_annotations.ts` imports\n`CanActivate` under an alias and then re-exports a new variable\ndeclaration under the **same name**. This **breaks the API doc\ngeneration**. This simple refactoring renames the private `CanActivate`\nto `CanActivateAnnotation`.",
+        "compare_url": "https://github.com/angular/angular/pull/9912",
+        "committed_at": "2016-07-08T14:09:43Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143343127",
+          "@representation": "minimal",
+          "id": 143343127
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143343128",
+          "@representation": "minimal",
+          "id": 143343128
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143343129",
+          "@representation": "minimal",
+          "id": 143343129
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143343130",
+          "@representation": "minimal",
+          "id": 143343130
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143343131",
+          "@representation": "minimal",
+          "id": 143343131
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143343132",
+          "@representation": "minimal",
+          "id": 143343132
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/63153",
+        "@representation": "minimal",
+        "id": 63153,
+        "login": "chalin"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143370467",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143370467,
+      "number": "19248",
+      "state": "passed",
+      "duration": 3969,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "fix(http): fix URLSearchParams clone method to include subclassed Que…",
+      "pull_request_number": 9900,
+      "started_at": "2016-07-08T16:03:28Z",
+      "finished_at": "2016-07-08T16:28:00Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40651602,
+        "sha": "7e2e3ca7c079e36dc7fb2e51afcf900b7074f3f0",
+        "ref": "refs/pull/9900/merge",
+        "message": "fix(http): fix URLSearchParams clone method to include subclassed QueryEncoder",
+        "compare_url": "https://github.com/angular/angular/pull/9900",
+        "committed_at": "2016-07-08T15:59:21Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143370468",
+          "@representation": "minimal",
+          "id": 143370468
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143370469",
+          "@representation": "minimal",
+          "id": 143370469
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143370470",
+          "@representation": "minimal",
+          "id": 143370470
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143370471",
+          "@representation": "minimal",
+          "id": 143370471
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143370472",
+          "@representation": "minimal",
+          "id": 143370472
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143370473",
+          "@representation": "minimal",
+          "id": 143370473
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/731776",
+        "@representation": "minimal",
+        "id": 731776,
+        "login": "Cody-Nicholson"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143377406",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143377406,
+      "number": "19249",
+      "state": "passed",
+      "duration": 3191,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "docs(developer): update building and testing instructions",
+      "pull_request_number": 9903,
+      "started_at": "2016-07-08T16:29:55Z",
+      "finished_at": "2016-07-08T16:45:31Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40653621,
+        "sha": "25f10eed64d9a99ec8dc6aceb2053f99a2ffef20",
+        "ref": "refs/pull/9903/merge",
+        "message": "docs(developer): cleanup PR",
+        "compare_url": "https://github.com/angular/angular/pull/9903",
+        "committed_at": "2016-07-08T16:28:18Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143377407",
+          "@representation": "minimal",
+          "id": 143377407
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143377408",
+          "@representation": "minimal",
+          "id": 143377408
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143377410",
+          "@representation": "minimal",
+          "id": 143377410
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143377411",
+          "@representation": "minimal",
+          "id": 143377411
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143377412",
+          "@representation": "minimal",
+          "id": 143377412
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143377413",
+          "@representation": "minimal",
+          "id": 143377413
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/104704",
+        "@representation": "minimal",
+        "id": 104704,
+        "login": "joelbrewer"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143378474",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143378474,
+      "number": "19250",
+      "state": "passed",
+      "duration": 3049,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "docs(developer): update building and testing instructions",
+      "pull_request_number": 9903,
+      "started_at": "2016-07-08T16:34:46Z",
+      "finished_at": "2016-07-08T16:46:34Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40653950,
+        "sha": "5113413747bdc4384954b01dcd93b566a24e4a4e",
+        "ref": "refs/pull/9903/merge",
+        "message": "docs(developer): update building and testing instructions\n\nUpdate documentation to reflect current build process.\n\nAddresses #9683",
+        "compare_url": "https://github.com/angular/angular/pull/9903",
+        "committed_at": "2016-07-08T16:31:58Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143378475",
+          "@representation": "minimal",
+          "id": 143378475
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143378476",
+          "@representation": "minimal",
+          "id": 143378476
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143378477",
+          "@representation": "minimal",
+          "id": 143378477
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143378478",
+          "@representation": "minimal",
+          "id": 143378478
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143378479",
+          "@representation": "minimal",
+          "id": 143378479
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143378480",
+          "@representation": "minimal",
+          "id": 143378480
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/104704",
+        "@representation": "minimal",
+        "id": 104704,
+        "login": "joelbrewer"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143379494",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143379494,
+      "number": "19251",
+      "state": "passed",
+      "duration": 3573,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "docs(developer): update building and testing instructions",
+      "pull_request_number": 9903,
+      "started_at": "2016-07-08T16:39:26Z",
+      "finished_at": "2016-07-08T16:54:46Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40654279,
+        "sha": "df63ed28ea1d20ac4cf31723e0df50d9de88b8c1",
+        "ref": "refs/pull/9903/merge",
+        "message": "docs(developer): update building and testing instructions\n\nUpdate documentation to reflect current build process.\n\nAddresses #9683",
+        "compare_url": "https://github.com/angular/angular/pull/9903",
+        "committed_at": "2016-07-08T16:38:09Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143379495",
+          "@representation": "minimal",
+          "id": 143379495
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143379496",
+          "@representation": "minimal",
+          "id": 143379496
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143379497",
+          "@representation": "minimal",
+          "id": 143379497
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143379498",
+          "@representation": "minimal",
+          "id": 143379498
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143379499",
+          "@representation": "minimal",
+          "id": 143379499
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143379500",
+          "@representation": "minimal",
+          "id": 143379500
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/104704",
+        "@representation": "minimal",
+        "id": 104704,
+        "login": "joelbrewer"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143383053",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143383053,
+      "number": "19252",
+      "state": "failed",
+      "duration": 4028,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(ExpressionChangedAfterItHasBeenCheckedException): more meaningful errors",
+      "pull_request_number": 9895,
+      "started_at": "2016-07-08T16:56:28Z",
+      "finished_at": "2016-07-08T17:19:38Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40655314,
+        "sha": "a3c63bdb52ad337eb310e8166d90d7727f8b140e",
+        "ref": "refs/pull/9895/merge",
+        "message": "feat(ExpressionChangedAfterItHasBeenCheckedException): more meaningful error message\n\nfixes #9882",
+        "compare_url": "https://github.com/angular/angular/pull/9895",
+        "committed_at": "2016-07-08T16:52:58Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143383054",
+          "@representation": "minimal",
+          "id": 143383054
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143383055",
+          "@representation": "minimal",
+          "id": 143383055
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143383056",
+          "@representation": "minimal",
+          "id": 143383056
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143383057",
+          "@representation": "minimal",
+          "id": 143383057
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143383058",
+          "@representation": "minimal",
+          "id": 143383058
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143383059",
+          "@representation": "minimal",
+          "id": 143383059
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/4183",
+        "@representation": "minimal",
+        "id": 4183,
+        "login": "vicb"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143386963",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143386963,
+      "number": "19253",
+      "state": "passed",
+      "duration": 3111,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "fix(TemplateParser): add support for data-template attribute",
+      "pull_request_number": 9917,
+      "started_at": "2016-07-08T17:21:25Z",
+      "finished_at": "2016-07-08T17:29:46Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40656448,
+        "sha": "5156245bb6ef6d09f4d93362e034a32e6dce2586",
+        "ref": "refs/pull/9917/merge",
+        "message": "fix(TemplateParser): add support for data-template attribute\n\nfixes #9904",
+        "compare_url": "https://github.com/angular/angular/pull/9917",
+        "committed_at": "2016-07-08T17:09:49Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143386964",
+          "@representation": "minimal",
+          "id": 143386964
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143386965",
+          "@representation": "minimal",
+          "id": 143386965
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143386966",
+          "@representation": "minimal",
+          "id": 143386966
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143386967",
+          "@representation": "minimal",
+          "id": 143386967
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143386968",
+          "@representation": "minimal",
+          "id": 143386968
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143386969",
+          "@representation": "minimal",
+          "id": 143386969
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/4183",
+        "@representation": "minimal",
+        "id": 4183,
+        "login": "vicb"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143392251",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143392251,
+      "number": "19254",
+      "state": "passed",
+      "duration": 3214,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(ExpressionChangedAfterItHasBeenCheckedException): more meaningful errors",
+      "pull_request_number": 9895,
+      "started_at": "2016-07-08T17:35:20Z",
+      "finished_at": "2016-07-08T17:49:04Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40658032,
+        "sha": "81301d09cee6b391abec523360bdb71557707ee2",
+        "ref": "refs/pull/9895/merge",
+        "message": "feat(ExpressionChangedAfterItHasBeenCheckedException): more meaningful error message\n\nfixes #9882",
+        "compare_url": "https://github.com/angular/angular/pull/9895",
+        "committed_at": "2016-07-08T17:34:22Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143392252",
+          "@representation": "minimal",
+          "id": 143392252
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143392253",
+          "@representation": "minimal",
+          "id": 143392253
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143392254",
+          "@representation": "minimal",
+          "id": 143392254
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143392255",
+          "@representation": "minimal",
+          "id": 143392255
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143392256",
+          "@representation": "minimal",
+          "id": 143392256
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143392257",
+          "@representation": "minimal",
+          "id": 143392257
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/4183",
+        "@representation": "minimal",
+        "id": 4183,
+        "login": "vicb"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143393762",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143393762,
+      "number": "19255",
+      "state": "passed",
+      "duration": 3749,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(forms): updateValue for form groups and form arrays",
+      "pull_request_number": 9901,
+      "started_at": "2016-07-08T17:42:07Z",
+      "finished_at": "2016-07-08T18:04:39Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40658413,
+        "sha": "35636174f9eaf2ff176ebb7307f7da53026f85bd",
+        "ref": "refs/pull/9901/merge",
+        "message": "feat(forms): updateValue() for form groups and form arrays",
+        "compare_url": "https://github.com/angular/angular/pull/9901",
+        "committed_at": "2016-07-08T17:40:34Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143393763",
+          "@representation": "minimal",
+          "id": 143393763
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143393764",
+          "@representation": "minimal",
+          "id": 143393764
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143393765",
+          "@representation": "minimal",
+          "id": 143393765
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143393766",
+          "@representation": "minimal",
+          "id": 143393766
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143393767",
+          "@representation": "minimal",
+          "id": 143393767
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143393768",
+          "@representation": "minimal",
+          "id": 143393768
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/310055",
+        "@representation": "minimal",
+        "id": 310055,
+        "login": "kara"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143396556",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143396556,
+      "number": "19256",
+      "state": "passed",
+      "duration": 2969,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2016-07-08T17:53:57Z",
+      "finished_at": "2016-07-08T18:06:36Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40659177,
+        "sha": "2de8364de289cf141b341e8e64277a858a10142b",
+        "ref": "refs/heads/master",
+        "message": "feat(ExpressionChangedAfterItHasBeenCheckedException): more meaningful error message\n\nfixes #9882",
+        "compare_url": "https://github.com/angular/angular/compare/749dec7dfb0c...2de8364de289",
+        "committed_at": "2016-07-08T17:34:22Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143396557",
+          "@representation": "minimal",
+          "id": 143396557
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143396558",
+          "@representation": "minimal",
+          "id": 143396558
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143396559",
+          "@representation": "minimal",
+          "id": 143396559
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143396560",
+          "@representation": "minimal",
+          "id": 143396560
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143396561",
+          "@representation": "minimal",
+          "id": 143396561
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143396562",
+          "@representation": "minimal",
+          "id": 143396562
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/4183",
+        "@representation": "minimal",
+        "id": 4183,
+        "login": "vicb"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143397379",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143397379,
+      "number": "19257",
+      "state": "passed",
+      "duration": 4328,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "fix(router): disallow root segments with matrix params",
+      "pull_request_number": 9920,
+      "started_at": "2016-07-08T17:57:53Z",
+      "finished_at": "2016-07-08T18:22:34Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40659424,
+        "sha": "6ad2c38f23de5ab48d0c51d0034329bdb39eb86a",
+        "ref": "refs/pull/9920/merge",
+        "message": "fix(router): disallow root segments with matrix params",
+        "compare_url": "https://github.com/angular/angular/pull/9920",
+        "committed_at": "2016-07-08T17:56:36Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143397380",
+          "@representation": "minimal",
+          "id": 143397380
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143397381",
+          "@representation": "minimal",
+          "id": 143397381
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143397382",
+          "@representation": "minimal",
+          "id": 143397382
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143397383",
+          "@representation": "minimal",
+          "id": 143397383
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143397384",
+          "@representation": "minimal",
+          "id": 143397384
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143397385",
+          "@representation": "minimal",
+          "id": 143397385
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/6441",
+        "@representation": "minimal",
+        "id": 6441,
+        "login": "vsavkin"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143405797",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143405797,
+      "number": "19258",
+      "state": "failed",
+      "duration": 3280,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "refactor(core): clean up platform bootstrap and initTestEnvironment",
+      "pull_request_number": 9922,
+      "started_at": "2016-07-08T18:34:05Z",
+      "finished_at": "2016-07-08T18:46:41Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40662129,
+        "sha": "c721f0493b6d16a4a63029710273e91e6f285406",
+        "ref": "refs/pull/9922/merge",
+        "message": "refactor(core): clean up platform bootstrap and initTestEnvironment\n\n- Introduces `CompilerFactory` which can be part of a `PlatformRef`.\n- Introduces `WorkerAppModule`, `WorkerUiModule`, `ServerModule`\n- Changes browser bootstrap for runtime and offline compilation (see below for an example).\n  * introduces `bootstrapModule` and `bootstrapModuleFactory` in `@angular/core`\n  * introduces new `browserDynamicPlatform` in `@angular/platform-browser-dynamic\n- Changes `initTestEnvironment` (which used to be `setBaseTestProviders`) to not take a compiler factory any more (see below for an example).\n\nBREAKING CHANGE:\n\n## migrating form `setBaseTestProviders` to `initTestEnvironment`:\nFor the browser platform:\n\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS} from ‘@angular/platform-browser-dynamic/testing’;\n\n  setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {browserDynamicTestPlatform,\n      BrowserDynamicTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      BrowserDynamicTestModule,\n      browserDynamicTestPlatform());\n\n  ```\nFor the server platform:\n\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS} from ‘@angular/platform-server/testing/server’;\n\n  setBaseTestProviders(TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {serverTestPlatform,\n      ServerTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      ServerTestModule,\n      serverTestPlatform());\n\n  ```\n\n## bootstrap change\n```\n@AppModule({\n  modules: [BrowserModule],\n  precompile: [MainComponent],\n  providers: […], // additional providers\n  directives: […], // additional platform directives\n  pipes: […] // additional platform pipes\n})\nclass MyModule {\n  constructor(appRef: ApplicationRef) {\n    appRef.bootstrap(MainComponent);\n  }\n}\n\n// offline compile\nimport {browserPlatform} from ‘@angular/platform-browser’;\nimport {bootstrapModuleFactory} from ‘@angular/core’;\n\nbootstrapModuleFactory(MyModuleNgFactory, browserPlatform());\n\n// runtime compile long form\nimport {browserDynamicPlatform} from ‘@angular/platform-browser-dynamic’;\nimport {bootstrapModule} from ‘@angular/core’;\n\nbootstrapModule(MyModule, browserDynamicPlatform());\n```",
+        "compare_url": "https://github.com/angular/angular/pull/9922",
+        "committed_at": "2016-07-08T18:32:18Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143405798",
+          "@representation": "minimal",
+          "id": 143405798
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143405799",
+          "@representation": "minimal",
+          "id": 143405799
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143405800",
+          "@representation": "minimal",
+          "id": 143405800
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143405801",
+          "@representation": "minimal",
+          "id": 143405801
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143405802",
+          "@representation": "minimal",
+          "id": 143405802
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143405803",
+          "@representation": "minimal",
+          "id": 143405803
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/26073",
+        "@representation": "minimal",
+        "id": 26073,
+        "login": "tbosch"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143406862",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143406862,
+      "number": "19259",
+      "state": "passed",
+      "duration": 3642,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "docs(developer): update building and testing instructions",
+      "pull_request_number": 9903,
+      "started_at": "2016-07-08T18:38:09Z",
+      "finished_at": "2016-07-08T18:56:06Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40662481,
+        "sha": "e47b43414cd96610d91fc1c5e918d7862a062a67",
+        "ref": "refs/pull/9903/merge",
+        "message": "docs(developer): update building and testing instructions\n\nUpdate documentation to reflect current build process.\n\nAddresses #9683",
+        "compare_url": "https://github.com/angular/angular/pull/9903",
+        "committed_at": "2016-07-08T18:36:15Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143406863",
+          "@representation": "minimal",
+          "id": 143406863
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143406864",
+          "@representation": "minimal",
+          "id": 143406864
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143406865",
+          "@representation": "minimal",
+          "id": 143406865
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143406866",
+          "@representation": "minimal",
+          "id": 143406866
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143406867",
+          "@representation": "minimal",
+          "id": 143406867
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143406868",
+          "@representation": "minimal",
+          "id": 143406868
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/104704",
+        "@representation": "minimal",
+        "id": 104704,
+        "login": "joelbrewer"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143410885",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143410885,
+      "number": "19260",
+      "state": "failed",
+      "duration": 972,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "fix(testing): remove deprecated testing APIs",
+      "pull_request_number": 9923,
+      "started_at": "2016-07-08T18:50:42Z",
+      "finished_at": "2016-07-08T18:53:50Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40663573,
+        "sha": "da547cbd09429ce66eb746381c8231f1bd5d60da",
+        "ref": "refs/pull/9923/merge",
+        "message": "fix(testing): remove deprecated testing APIs\n\nSee https://github.com/angular/angular/blob/master/CHANGELOG.md for\nprior deprecation and how to update.",
+        "compare_url": "https://github.com/angular/angular/pull/9923",
+        "committed_at": "2016-07-08T18:46:42Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143410886",
+          "@representation": "minimal",
+          "id": 143410886
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143410889",
+          "@representation": "minimal",
+          "id": 143410889
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143410890",
+          "@representation": "minimal",
+          "id": 143410890
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143410891",
+          "@representation": "minimal",
+          "id": 143410891
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143410892",
+          "@representation": "minimal",
+          "id": 143410892
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143410893",
+          "@representation": "minimal",
+          "id": 143410893
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/58992",
+        "@representation": "minimal",
+        "id": 58992,
+        "login": "juliemr"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143413837",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143413837,
+      "number": "19261",
+      "state": "passed",
+      "duration": 3249,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2016-07-08T19:01:36Z",
+      "finished_at": "2016-07-08T19:14:19Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40664495,
+        "sha": "426b002897c7913929f1bc627a245a34cafa566d",
+        "ref": "refs/heads/master",
+        "message": "docs(developer): update building and testing instructions (#9903)\n\nfixes #9683",
+        "compare_url": "https://github.com/angular/angular/compare/2de8364de289...426b002897c7",
+        "committed_at": "2016-07-08T19:00:27Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143413838",
+          "@representation": "minimal",
+          "id": 143413838
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143413839",
+          "@representation": "minimal",
+          "id": 143413839
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143413840",
+          "@representation": "minimal",
+          "id": 143413840
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143413841",
+          "@representation": "minimal",
+          "id": 143413841
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143413842",
+          "@representation": "minimal",
+          "id": 143413842
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143413843",
+          "@representation": "minimal",
+          "id": 143413843
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/4183",
+        "@representation": "minimal",
+        "id": 4183,
+        "login": "vicb"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143421408",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143421408,
+      "number": "19262",
+      "state": "passed",
+      "duration": 3100,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(forms): updateValue for form groups and form arrays",
+      "pull_request_number": 9901,
+      "started_at": "2016-07-08T19:34:09Z",
+      "finished_at": "2016-07-08T19:44:57Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40666810,
+        "sha": "193f625f60b1006c8bf60131469d7648c401c141",
+        "ref": "refs/pull/9901/merge",
+        "message": "feat(forms): updateValue() for form groups and form arrays",
+        "compare_url": "https://github.com/angular/angular/pull/9901",
+        "committed_at": "2016-07-08T19:33:38Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143421409",
+          "@representation": "minimal",
+          "id": 143421409
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143421410",
+          "@representation": "minimal",
+          "id": 143421410
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143421411",
+          "@representation": "minimal",
+          "id": 143421411
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143421412",
+          "@representation": "minimal",
+          "id": 143421412
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143421413",
+          "@representation": "minimal",
+          "id": 143421413
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143421414",
+          "@representation": "minimal",
+          "id": 143421414
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/310055",
+        "@representation": "minimal",
+        "id": 310055,
+        "login": "kara"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143422669",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143422669,
+      "number": "19263",
+      "state": "passed",
+      "duration": 3239,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(forms): updateValue for form groups and form arrays",
+      "pull_request_number": 9901,
+      "started_at": "2016-07-08T19:40:42Z",
+      "finished_at": "2016-07-08T19:53:23Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40667217,
+        "sha": "dd24380d9015c69560c36ca0bbdfe4130f78547c",
+        "ref": "refs/pull/9901/merge",
+        "message": "feat(forms): updateValue() for form groups and form arrays",
+        "compare_url": "https://github.com/angular/angular/pull/9901",
+        "committed_at": "2016-07-08T19:39:58Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143422670",
+          "@representation": "minimal",
+          "id": 143422670
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143422671",
+          "@representation": "minimal",
+          "id": 143422671
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143422672",
+          "@representation": "minimal",
+          "id": 143422672
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143422673",
+          "@representation": "minimal",
+          "id": 143422673
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143422674",
+          "@representation": "minimal",
+          "id": 143422674
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143422675",
+          "@representation": "minimal",
+          "id": 143422675
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/310055",
+        "@representation": "minimal",
+        "id": 310055,
+        "login": "kara"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143424643",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143424643,
+      "number": "19264",
+      "state": "passed",
+      "duration": 3829,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(forms): updateValue for form groups and form arrays",
+      "pull_request_number": 9901,
+      "started_at": "2016-07-08T20:01:27Z",
+      "finished_at": "2016-07-08T20:16:48Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40667832,
+        "sha": "36e53a030911f3b104a3422fca84a8d43a6f4609",
+        "ref": "refs/pull/9901/merge",
+        "message": "feat(forms): updateValue() for form groups and form arrays\n\nCloses #9553",
+        "compare_url": "https://github.com/angular/angular/pull/9901",
+        "committed_at": "2016-07-08T19:48:32Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143424644",
+          "@representation": "minimal",
+          "id": 143424644
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143424645",
+          "@representation": "minimal",
+          "id": 143424645
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143424646",
+          "@representation": "minimal",
+          "id": 143424646
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143424648",
+          "@representation": "minimal",
+          "id": 143424648
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143424650",
+          "@representation": "minimal",
+          "id": 143424650
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143424651",
+          "@representation": "minimal",
+          "id": 143424651
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/310055",
+        "@representation": "minimal",
+        "id": 310055,
+        "login": "kara"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143428432",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143428432,
+      "number": "19265",
+      "state": "passed",
+      "duration": 2907,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2016-07-08T20:05:09Z",
+      "finished_at": "2016-07-08T20:18:12Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40668932,
+        "sha": "30a332ee3670778835805e6b6ea5a912d72669e7",
+        "ref": "refs/heads/master",
+        "message": "feat(forms): updateValue() for form groups and form arrays (#9901)\n\nCloses #9553",
+        "compare_url": "https://github.com/angular/angular/compare/426b002897c7...30a332ee3670",
+        "committed_at": "2016-07-08T20:04:25Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143428433",
+          "@representation": "minimal",
+          "id": 143428433
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143428435",
+          "@representation": "minimal",
+          "id": 143428435
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143428436",
+          "@representation": "minimal",
+          "id": 143428436
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143428437",
+          "@representation": "minimal",
+          "id": 143428437
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143428438",
+          "@representation": "minimal",
+          "id": 143428438
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143428439",
+          "@representation": "minimal",
+          "id": 143428439
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/310055",
+        "@representation": "minimal",
+        "id": 310055,
+        "login": "kara"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143429097",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143429097,
+      "number": "19266",
+      "state": "passed",
+      "duration": 3696,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2016-07-08T20:08:24Z",
+      "finished_at": "2016-07-08T20:29:21Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40669127,
+        "sha": "d84a43c82897b2aa6a083311c731191b4ae48f0f",
+        "ref": "refs/heads/master",
+        "message": "fix(TemplateParser): add support for data-template attribute\n\nfixes #9904",
+        "compare_url": "https://github.com/angular/angular/compare/30a332ee3670...d84a43c82897",
+        "committed_at": "2016-07-08T20:07:01Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143429098",
+          "@representation": "minimal",
+          "id": 143429098
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429099",
+          "@representation": "minimal",
+          "id": 143429099
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429100",
+          "@representation": "minimal",
+          "id": 143429100
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429101",
+          "@representation": "minimal",
+          "id": 143429101
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429102",
+          "@representation": "minimal",
+          "id": 143429102
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429103",
+          "@representation": "minimal",
+          "id": 143429103
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/4183",
+        "@representation": "minimal",
+        "id": 4183,
+        "login": "vicb"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143429188",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143429188,
+      "number": "19267",
+      "state": "failed",
+      "duration": 3363,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "refactor(core): clean up platform bootstrap and initTestEnvironment",
+      "pull_request_number": 9922,
+      "started_at": "2016-07-08T20:08:45Z",
+      "finished_at": "2016-07-08T20:29:50Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40669163,
+        "sha": "8ab1fd617ecb4f03f4182fb445e3f5dfa18f8942",
+        "ref": "refs/pull/9922/merge",
+        "message": "refactor(core): clean up platform bootstrap and initTestEnvironment\n\n- Introduces `CompilerFactory` which can be part of a `PlatformRef`.\n- Introduces `WorkerAppModule`, `WorkerUiModule`, `ServerModule`\n- Introduces `serverDynamicPlatform` for applications using runtime compilation\n  on the server.\n- Changes browser bootstrap for runtime and offline compilation (see below for an example).\n  * introduces `bootstrapModule` and `bootstrapModuleFactory` in `@angular/core`\n  * introduces new `browserDynamicPlatform` in `@angular/platform-browser-dynamic\n- Changes `initTestEnvironment` (which used to be `setBaseTestProviders`) to not take a compiler factory any more (see below for an example).\n\nBREAKING CHANGE:\n\n## Migration from `setBaseTestProviders` to `initTestEnvironment`:\n\n- For the browser platform:\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS} from ‘@angular/platform-browser-dynamic/testing’;\n\n  setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {browserDynamicTestPlatform,\n      BrowserDynamicTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      BrowserDynamicTestModule,\n      browserDynamicTestPlatform());\n\n  ```\n- For the server platform:\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS} from ‘@angular/platform-server/testing/server’;\n\n  setBaseTestProviders(TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {serverTestPlatform,\n      ServerTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      ServerTestModule,\n      serverTestPlatform());\n\n  ```\n\n## Bootstrap changes\n```\n@AppModule({\n  modules: [BrowserModule],\n  precompile: [MainComponent],\n  providers: […], // additional providers\n  directives: […], // additional platform directives\n  pipes: […] // additional platform pipes\n})\nclass MyModule {\n  constructor(appRef: ApplicationRef) {\n    appRef.bootstrap(MainComponent);\n  }\n}\n\n// offline compile\nimport {browserPlatform} from ‘@angular/platform-browser’;\nimport {bootstrapModuleFactory} from ‘@angular/core’;\n\nbootstrapModuleFactory(MyModuleNgFactory, browserPlatform());\n\n// runtime compile long form\nimport {browserDynamicPlatform} from ‘@angular/platform-browser-dynamic’;\nimport {bootstrapModule} from ‘@angular/core’;\n\nbootstrapModule(MyModule, browserDynamicPlatform());\n```",
+        "compare_url": "https://github.com/angular/angular/pull/9922",
+        "committed_at": "2016-07-08T20:07:50Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143429189",
+          "@representation": "minimal",
+          "id": 143429189
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429190",
+          "@representation": "minimal",
+          "id": 143429190
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429191",
+          "@representation": "minimal",
+          "id": 143429191
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429192",
+          "@representation": "minimal",
+          "id": 143429192
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429193",
+          "@representation": "minimal",
+          "id": 143429193
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143429194",
+          "@representation": "minimal",
+          "id": 143429194
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/26073",
+        "@representation": "minimal",
+        "id": 26073,
+        "login": "tbosch"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143432818",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143432818,
+      "number": "19268",
+      "state": "passed",
+      "duration": 3360,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "refactor(core): clean up platform bootstrap and initTestEnvironment",
+      "pull_request_number": 9922,
+      "started_at": "2016-07-08T20:25:40Z",
+      "finished_at": "2016-07-08T20:40:39Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40670278,
+        "sha": "bbda0394810415638cd18c829898b0ce2042e1d1",
+        "ref": "refs/pull/9922/merge",
+        "message": "refactor(core): clean up platform bootstrap and initTestEnvironment\n\n- Introduces `CompilerFactory` which can be part of a `PlatformRef`.\n- Introduces `WorkerAppModule`, `WorkerUiModule`, `ServerModule`\n- Introduces `serverDynamicPlatform` for applications using runtime compilation\n  on the server.\n- Changes browser bootstrap for runtime and offline compilation (see below for an example).\n  * introduces `bootstrapModule` and `bootstrapModuleFactory` in `@angular/core`\n  * introduces new `browserDynamicPlatform` in `@angular/platform-browser-dynamic\n- Changes `initTestEnvironment` (which used to be `setBaseTestProviders`) to not take a compiler factory any more (see below for an example).\n\nBREAKING CHANGE:\n\n## Migration from `setBaseTestProviders` to `initTestEnvironment`:\n\n- For the browser platform:\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS} from ‘@angular/platform-browser-dynamic/testing’;\n\n  setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {browserDynamicTestPlatform,\n      BrowserDynamicTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      BrowserDynamicTestModule,\n      browserDynamicTestPlatform());\n\n  ```\n- For the server platform:\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS} from ‘@angular/platform-server/testing/server’;\n\n  setBaseTestProviders(TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {serverTestPlatform,\n      ServerTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      ServerTestModule,\n      serverTestPlatform());\n\n  ```\n\n## Bootstrap changes\n```\n@AppModule({\n  modules: [BrowserModule],\n  precompile: [MainComponent],\n  providers: […], // additional providers\n  directives: […], // additional platform directives\n  pipes: […] // additional platform pipes\n})\nclass MyModule {\n  constructor(appRef: ApplicationRef) {\n    appRef.bootstrap(MainComponent);\n  }\n}\n\n// offline compile\nimport {browserPlatform} from ‘@angular/platform-browser’;\nimport {bootstrapModuleFactory} from ‘@angular/core’;\n\nbootstrapModuleFactory(MyModuleNgFactory, browserPlatform());\n\n// runtime compile long form\nimport {browserDynamicPlatform} from ‘@angular/platform-browser-dynamic’;\nimport {bootstrapModule} from ‘@angular/core’;\n\nbootstrapModule(MyModule, browserDynamicPlatform());\n```",
+        "compare_url": "https://github.com/angular/angular/pull/9922",
+        "committed_at": "2016-07-08T20:25:13Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143432819",
+          "@representation": "minimal",
+          "id": 143432819
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143432820",
+          "@representation": "minimal",
+          "id": 143432820
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143432821",
+          "@representation": "minimal",
+          "id": 143432821
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143432822",
+          "@representation": "minimal",
+          "id": 143432822
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143432823",
+          "@representation": "minimal",
+          "id": 143432823
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143432824",
+          "@representation": "minimal",
+          "id": 143432824
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/26073",
+        "@representation": "minimal",
+        "id": 26073,
+        "login": "tbosch"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143436386",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143436386,
+      "number": "19269",
+      "state": "passed",
+      "duration": 3275,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2016-07-08T20:42:08Z",
+      "finished_at": "2016-07-08T20:55:42Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40671353,
+        "sha": "fa4789003240d8d0f442cef692985730824faa3b",
+        "ref": "refs/heads/master",
+        "message": "refactor(core): clean up platform bootstrap and initTestEnvironment\n\n- Introduces `CompilerFactory` which can be part of a `PlatformRef`.\n- Introduces `WorkerAppModule`, `WorkerUiModule`, `ServerModule`\n- Introduces `serverDynamicPlatform` for applications using runtime compilation\n  on the server.\n- Changes browser bootstrap for runtime and offline compilation (see below for an example).\n  * introduces `bootstrapModule` and `bootstrapModuleFactory` in `@angular/core`\n  * introduces new `browserDynamicPlatform` in `@angular/platform-browser-dynamic\n- Changes `initTestEnvironment` (which used to be `setBaseTestProviders`) to not take a compiler factory any more (see below for an example).\n\nBREAKING CHANGE:\n\n## Migration from `setBaseTestProviders` to `initTestEnvironment`:\n\n- For the browser platform:\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS} from ‘@angular/platform-browser-dynamic/testing’;\n\n  setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,\n      TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {browserDynamicTestPlatform,\n      BrowserDynamicTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      BrowserDynamicTestModule,\n      browserDynamicTestPlatform());\n\n  ```\n- For the server platform:\n  BEFORE:\n  ```\n  import {setBaseTestProviders} from ‘@angular/core/testing’;\n  import {TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS} from ‘@angular/platform-server/testing/server’;\n\n  setBaseTestProviders(TEST_SERVER_PLATFORM_PROVIDERS,\n      TEST_SERVER_APPLICATION_PROVIDERS);\n  ```\n\n  AFTER:\n  ```\n  import {initTestEnvironment} from ‘@angular/core/testing’;\n  import {serverTestPlatform,\n      ServerTestModule} from ‘@angular/platform-browser-dynamic/testing’;\n\n  initTestEnvironment(\n      ServerTestModule,\n      serverTestPlatform());\n\n  ```\n\n## Bootstrap changes\n```\n@AppModule({\n  modules: [BrowserModule],\n  precompile: [MainComponent],\n  providers: […], // additional providers\n  directives: […], // additional platform directives\n  pipes: […] // additional platform pipes\n})\nclass MyModule {\n  constructor(appRef: ApplicationRef) {\n    appRef.bootstrap(MainComponent);\n  }\n}\n\n// offline compile\nimport {browserPlatform} from ‘@angular/platform-browser’;\nimport {bootstrapModuleFactory} from ‘@angular/core’;\n\nbootstrapModuleFactory(MyModuleNgFactory, browserPlatform());\n\n// runtime compile long form\nimport {browserDynamicPlatform} from ‘@angular/platform-browser-dynamic’;\nimport {bootstrapModule} from ‘@angular/core’;\n\nbootstrapModule(MyModule, browserDynamicPlatform());\n```\n\nCloses #9922\nPart of #9726",
+        "compare_url": "https://github.com/angular/angular/compare/d84a43c82897...fa4789003240",
+        "committed_at": "2016-07-08T20:41:38Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143436387",
+          "@representation": "minimal",
+          "id": 143436387
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143436388",
+          "@representation": "minimal",
+          "id": 143436388
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143436389",
+          "@representation": "minimal",
+          "id": 143436389
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143436390",
+          "@representation": "minimal",
+          "id": 143436390
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143436391",
+          "@representation": "minimal",
+          "id": 143436391
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143436392",
+          "@representation": "minimal",
+          "id": 143436392
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/26073",
+        "@representation": "minimal",
+        "id": 26073,
+        "login": "tbosch"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143438300",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143438300,
+      "number": "19270",
+      "state": "failed",
+      "duration": 2924,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(router): add activate and deactivate events to RouterOutlet",
+      "pull_request_number": 9925,
+      "started_at": "2016-07-08T20:51:01Z",
+      "finished_at": "2016-07-08T21:02:14Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40671962,
+        "sha": "e81e03b1819bf4f904698003cb481dbfb3399c05",
+        "ref": "refs/pull/9925/merge",
+        "message": "feat(router): add activate and deactivate events to RouterOutlet",
+        "compare_url": "https://github.com/angular/angular/pull/9925",
+        "committed_at": "2016-07-08T20:48:38Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143438302",
+          "@representation": "minimal",
+          "id": 143438302
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143438303",
+          "@representation": "minimal",
+          "id": 143438303
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143438304",
+          "@representation": "minimal",
+          "id": 143438304
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143438305",
+          "@representation": "minimal",
+          "id": 143438305
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143438306",
+          "@representation": "minimal",
+          "id": 143438306
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143438307",
+          "@representation": "minimal",
+          "id": 143438307
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/6441",
+        "@representation": "minimal",
+        "id": 6441,
+        "login": "vsavkin"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/143444911",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 143444911,
+      "number": "19271",
+      "state": "passed",
+      "duration": 3736,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "feat(router): empty-path routes should inherit matrix params",
+      "pull_request_number": 9926,
+      "started_at": "2016-07-08T21:22:15Z",
+      "finished_at": "2016-07-08T21:42:23Z",
+      "private": false,
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/3087189",
+        "@representation": "minimal",
+        "id": 3087189,
+        "name": "angular",
+        "slug": "angular/angular"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/3087189/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 40673956,
+        "sha": "82341b41878c2aca7df1c6e10f291687049c9313",
+        "ref": "refs/pull/9926/merge",
+        "message": "feat(router): empty-path routes should inherit matrix params",
+        "compare_url": "https://github.com/angular/angular/pull/9926",
+        "committed_at": "2016-07-08T21:21:37Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/143444912",
+          "@representation": "minimal",
+          "id": 143444912
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143444913",
+          "@representation": "minimal",
+          "id": 143444913
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143444914",
+          "@representation": "minimal",
+          "id": 143444914
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143444915",
+          "@representation": "minimal",
+          "id": 143444915
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143444916",
+          "@representation": "minimal",
+          "id": 143444916
+        },
+        {
+          "@type": "job",
+          "@href": "/job/143444917",
+          "@representation": "minimal",
+          "id": 143444917
+        }
+      ],
+      "stages": [],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/6441",
+        "@representation": "minimal",
+        "id": 6441,
+        "login": "vsavkin"
+      },
+      "updated_at": "2019-04-11T12:57:29.477Z"
+    }
+  ]
+}
