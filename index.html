@@ -1,73 +1,8 @@
-<!DOCTYPE html>
+<html>
 <head>
-  <title>travigraph.js</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vega-tooltip/build/vega-tooltip.min.css">
-  <style media="screen">
-    /* Add space between Vega-Embed links  */
-    .vega-actions a {
-      margin-right: 5px;
-    }
-  </style>
-
 </head>
-<body style="margin: 40px">
-  <h1>travigraph.js</h1>
-  <i>Plot the travis-CI build times of a repo using the travis-CI API</i>
-  <div id="view"></div>
-  <form action="#">
-    <input type="text" id="repo" value="angular/angular"></input>
-    <input type="number" id="start" value=0></input>
-    <input type="number" id="end" value=1000></input>
-    <button type="submit">Submit</button>
-    <button id="lookup">Lookup</button>
-    <button data-toggle="modal" data-target="#myModal">?</button>
-  </form>
-  <a href="https://github.com/cmdcolin/travigraphjs/">GitHub</a>
-  <div id="versions"></div>
-
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Help</h4>
-        </div>
-        <div class="modal-body">
-            <h3>Usage</h3>
-            <p>Simply enter the user/org and repository name to look up on the Travis-CI platform, along with the start and end build numbers (use 0 and a semi-large number to get whole history, total build numbers is not known beforehand)</p>
-            <h3>Troubleshooting</h3>
-            <p>If you get errors, make sure to use capitalization-correct names of github org and repo name (github is flexible on capitalization, travis-CI is not)</p>
-            <p>Note that large outliers are removed automatically (stalled builds, etc) and the API is also rate limited to reduce stress on their servers.</p>
-            <h3>Source</h3>
-            <a href="https://github.com/cmdcolin/travigraphjs">https://github.com/cmdcolin/travigraphjs</a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="dist/main.js"></script>
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-59273647-1', 'auto');
-    ga('send', 'pageview');
-  </script>
+<body>
+    <div id="root"></div>
+    <script src="main.js"></script>
 </body>
 </html>

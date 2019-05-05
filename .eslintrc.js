@@ -1,0 +1,76 @@
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'airbnb-base',
+    'react',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'prettier/react',
+    'prettier/@typescript-eslint',
+  ],
+  plugins: ['@typescript-eslint', 'prettier'],
+  parserOptions: { ecmaFeatures: { jsx: true } },
+  env: {
+    browser: true,
+  },
+  rules: {
+    'class-methods-use-this': 'off',
+    'import/no-cycle': 'warn',
+    'import/prefer-default-export': 'off',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-debugger': 'warn',
+    'no-param-reassign': 'off',
+    'no-restricted-syntax': 'off',
+    'no-underscore-dangle': 'warn',
+    'no-unused-vars': 'warn',
+    'no-use-before-define': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        semi: false,
+        trailingComma: 'all',
+      },
+    ],
+    'react/destructuring-assignment': 'warn',
+    'react/jsx-filename-extension': 'off',
+    'react/no-unused-state': 'warn',
+    'react/prefer-stateless-function': 'warn',
+    '@typescript-eslint/camelcase': 'warn',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+  },
+  settings: {
+    "import/resolver": {
+      node: {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  overrides: [
+    {
+      files: ['packages/generator-jbrowse/**/*'],
+      env: { node: true },
+      rules: { '@typescript-eslint/no-var-requires': 'off' }
+    },
+    {
+      files: ['**/*.worker.js'],
+      globals: { self: true },
+      rules: { 'no-restricted-globals': 'off' },
+    },
+    {
+      files: ['**/*.test.js'],
+      env: { jest: true },
+      globals: {
+        document: true,
+        it: true,
+        describe: true,
+        test: true,
+      },
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+        // 'no-restricted-globals': 'off',
+      },
+    },
+  ],
+}
