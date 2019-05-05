@@ -1,3 +1,7 @@
+- Added aborting
+- Added example button
+- Added local storage cache
+
 ## Version 1.0.3 - May 5th, 2019
 
 ### Features
