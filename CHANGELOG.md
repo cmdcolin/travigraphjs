@@ -1,3 +1,5 @@
+## Version 1.0.3 - May 5th, 2019
+
 ### Features
 
 - Rewrote app in react
