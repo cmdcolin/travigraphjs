@@ -30,9 +30,17 @@ export function RepoForm(props) {
         onChange={evt => setState({ ...state, com: evt.target.checked })}
       />
       <button type="submit">Submit</button>
-      <button onClick={evt => onCancel(evt)}>Cancel</button>
       <button
         onClick={evt => {
+          evt.preventDefault()
+          onCancel(evt)
+        }}
+      >
+        Cancel
+      </button>
+      <button
+        onClick={evt => {
+          evt.preventDefault()
           const s = { repo: 'facebook/create-react-app', start: 0, end: 500, com: false }
           setState(s)
           onSubmit(s)
@@ -46,4 +54,5 @@ export function RepoForm(props) {
 RepoForm.propTypes = {
   init: PropTypes.object,
   onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
 }

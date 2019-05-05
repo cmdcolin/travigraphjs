@@ -15,3 +15,15 @@ export function filterOutliers(someArray = [], elt) {
 
   return filteredValues
 }
+export function isAbortException(exception) {
+  return (
+    // DOMException
+    exception.name === 'AbortError' ||
+    // standard-ish non-DOM abort exception
+    exception.code === 'ERR_ABORTED' ||
+    // stringified DOMException
+    exception.message === 'AbortError: aborted' ||
+    // stringified standard-ish exception
+    exception.message === 'Error: aborted'
+  )
+}

@@ -1,42 +1,52 @@
 import React, { useState, useEffect } from 'react'
 import { useQueryParams, BooleanParam, StringParam, NumberParam } from 'use-query-params'
-import PropTypes from 'prop-types'
 import { createClassFromLiteSpec } from 'react-vega-lite'
 import AbortablePromiseCache from 'abortable-promise-cache'
+import LSCache from 'lscache'
 import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
 import { RepoForm } from './RepoForm'
-import setFixtures from './set-fixtures'
-import { filterOutliers } from './util'
+import { filterOutliers, isAbortException } from './util'
 import './App.css'
+//use for debugging
+//import setFixtures from './set-fixtures'
+//setFixtures()
 
 const BUILDS_PER_REQUEST = 100
-setFixtures()
+LSCache.setExpiryMilliseconds(3600000)
 
 const cache = new AbortablePromiseCache({
   cache: new QuickLRU({ maxSize: 1000 }),
   async fill(requestData, signal) {
     const { url, headers } = requestData
-    return tenaciousFetch(url, { fetcher: window.fetch, headers, signal })
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          throw new Error(`failed http status ${res.status}`)
-        }
-      })
-      .then(res => res.builds)
-      .then(data =>
-        data.map(m => ({
-          message: (m.commit || {}).message,
-          branch: (m.branch || {}).name,
-          duration: m.duration / 60,
-          number: m.number,
-          finished_at: m.finished_at,
-          state: m.state,
-        })),
-      )
-      .then(data => filterOutliers(data))
+    const ret = LSCache.get(url)
+    return (
+      ret ||
+      tenaciousFetch(url, { headers, signal })
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          } else {
+            throw new Error(`failed http status ${res.status}`)
+          }
+        })
+        .then(res => res.builds)
+        .then(data =>
+          data.map(m => ({
+            message: (m.commit || {}).message,
+            branch: (m.branch || {}).name,
+            duration: m.duration / 60,
+            number: m.number,
+            finished_at: m.finished_at,
+            state: m.state,
+          })),
+        )
+        .then(data => filterOutliers(data))
+        .then(data => {
+          LSCache.set(url, data)
+          return data
+        })
+    )
   },
 })
 
@@ -90,26 +100,35 @@ function getBuilds({ counter, repo, start, end, com }) {
   const url = `${root}&offset=${offset}&sort_by=id`
   return offset <= end ? url : undefined
 }
+
+const blankState = () => {
+  return {
+    loading: null,
+    error: null,
+    downloaded: null,
+    controller: new AbortController(),
+    counter: 0,
+    builds: [],
+  }
+}
 export default function App() {
-  const [downloadedRepoData, setDownloadedRepoData] = useState()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState()
-  const [state, setState] = useState({ counter: 0, builds: [] })
+  const [state, setState] = useState(blankState())
+
   const [query, setQuery] = useQueryParams({
     repo: StringParam,
     start: NumberParam,
     end: NumberParam,
     com: BooleanParam,
   })
-  const { counter, builds } = state
+  const { counter, controller, builds, loading, downloaded, error } = state
   useEffect(
     query => {
       const { repo, start, end } = query || {}
       if (repo && !repo.includes('/')) {
-        setError('Repo should be in the form user/name')
+        setState({ ...blankState(), error: 'Repo should be in the form user/name' })
       }
       if (end <= start) {
-        setError('End should be greater than start')
+        setState({ ...blankState(), error: 'End should be greater than start' })
       }
     },
     [query],
@@ -118,25 +137,36 @@ export default function App() {
   useEffect(() => {
     async function getData(query) {
       try {
-        if (query && query.repo) {
-          setLoading(`Loading...build ${counter * BUILDS_PER_REQUEST}`)
+        if (loading && query && query.repo) {
+          setState({ ...state, loading: `Loading...build ${counter * BUILDS_PER_REQUEST}` })
           const url = getBuilds({ ...query, counter })
           if (url) {
             const headers = new Headers({ 'Travis-API-Version': '3' })
-            const result = await cache.get(url, { url, headers })
-            setState({ counter: counter + 1, builds: builds.concat(result) })
+            const result = await cache.get(url, { url, headers }, controller.signal)
+            setState({
+              ...state,
+              counter: counter + 1,
+              controller: new AbortController(),
+              builds: builds.concat(result),
+            })
+          } else if (!builds.length) {
+            setState({ ...blankState(), error: 'No builds loaded' })
           } else {
-            setLoading(null)
-            setDownloadedRepoData({ values: builds })
+            setState({ ...state, loading: null, downloaded: { values: builds } })
           }
         }
       } catch (e) {
-        console.error(e)
-        setError(e.message)
+        if (!isAbortException(e)) {
+          console.error(e)
+          setState({
+            ...blankState(),
+            error: e.message,
+          })
+        }
       }
     }
     getData(query)
-  }, [query, counter])
+  }, [loading, query, counter, controller])
 
   return (
     <>
@@ -148,21 +178,27 @@ export default function App() {
       <RepoForm
         init={query}
         onSubmit={res => {
-          setState({ counter: 0, builds: [] })
-          setDownloadedRepoData(null)
-          setLoading('Loading...')
+          if (loading) {
+            controller.abort()
+          }
           setQuery(res)
+          setState({
+            ...blankState(),
+            loading: 'Loading...',
+          })
         }}
         onCancel={() => {
-          setDownloadedRepoData(null)
-          setLoading(null)
-          setQuery({})
-          setState({ counter: 0, builds: [] })
+          if (loading) {
+            controller.abort()
+          }
+          setState({
+            ...blankState(),
+          })
         }}
       />
       {loading && <p>{loading}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {downloadedRepoData && <LineChart data={downloadedRepoData} />}
+      {downloaded && <LineChart data={downloaded} />}
       <a href="https://github.com/cmdcolin/travigraphjs/">travigraph@GitHub</a>
     </>
   )
