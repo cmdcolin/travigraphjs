@@ -5,6 +5,7 @@ import pLimit from 'p-limit'
 import { createClassFromLiteSpec } from 'react-vega-lite'
 import AbortablePromiseCache from 'abortable-promise-cache'
 import QuickLRU from 'quick-lru'
+import tenaciousFetch from 'tenacious-fetch'
 
 const headers = new Headers({ 'Travis-API-Version': '3' })
 const BUILDS_PER_REQUEST = 25
@@ -13,7 +14,17 @@ const cache = new AbortablePromiseCache({
   cache: new QuickLRU({ maxSize: 1000 }),
   async fill(requestData, signal) {
     const { url, headers } = requestData
-    return fetch(url, { headers, signal })
+    return tenaciousFetch(url, { headers, signal })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          throw new Error(`failed http status ${res.status}`)
+        }
+      })
+      .then(res => {
+        return res.builds
+      })
   },
 })
 
@@ -93,22 +104,7 @@ async function getBuilds({ repo, start, end, com }) {
 
   for (let i = start; i <= end; i += BUILDS_PER_REQUEST) {
     const url = `${prefix}&offset=${i}&sort_by=id`
-    input.push(
-      limit(() => {
-        return cache
-          .get(url, { url, headers })
-          .then(res => {
-            if (res.ok) {
-              return res.json()
-            } else {
-              throw new Error(`failed http status ${res.status}`)
-            }
-          })
-          .then(res => {
-            return res.builds
-          })
-      }),
-    )
+    input.push(limit(() => cache.get(url, { url, headers })))
   }
 
   const result = await Promise.all(input)
@@ -177,24 +173,32 @@ export default function App() {
   useEffect(() => {
     async function getData(query) {
       setLoading('Loading...')
-      if (query.repo) {
-        const result = await getBuilds(query)
-        setTimeout(() => {
-          setLoading(false)
-          setDownloadedRepoData(process(result))
-        }, 100)
+      try {
+        if (query.repo) {
+          const result = await getBuilds(query)
+          setTimeout(() => {
+            setLoading(false)
+            setDownloadedRepoData(process(result))
+          }, 100)
+        }
+      } catch (e) {
+        setError(e)
       }
     }
     getData(query)
   }, [query])
 
-  const Error = err => {
-    console.log(err)
-    return <p style={{ color: 'red' }}>{err.error}</p>
+  const Error = props => {
+    const { error } = props
+    return <p style={{ color: 'red' }}>{error.message || error}</p>
   }
   return (
     <>
       <h1>travigraph-js - Travis-CI duration graph</h1>
+      <p>
+        Enter a repo name, the start build, and end build to query for. Also specify whether this is on travis-ci.com
+        instead of .org with the checkbox
+      </p>
       <RepoForm
         init={query}
         onSubmit={res => {
@@ -205,6 +209,7 @@ export default function App() {
       {loading && <p>Loading...</p>}
       {error && <Error error={error} />}
       {downloadedRepoData && <LineChart data={downloadedRepoData} />}
+      <a href="https://github.com/cmdcolin/travigraphjs/">travigraph@GitHub</a>
     </>
   )
 }
