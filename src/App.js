@@ -172,9 +172,9 @@ export default function App() {
 
   useEffect(() => {
     async function getData(query) {
-      setLoading('Loading...')
       try {
         if (query.repo) {
+          setLoading('Loading...')
           const result = await getBuilds(query)
           setTimeout(() => {
             setLoading(false)
