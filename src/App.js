@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { useState, useEffect } from 'react'
-import { useQueryParams, StringParam, NumberParam, ArrayParam } from 'use-query-params'
+import { useQueryParams, BooleanParam, StringParam, NumberParam, ArrayParam } from 'use-query-params'
 import pLimit from 'p-limit'
 import { createClassFromLiteSpec } from 'react-vega-lite'
 
@@ -50,24 +50,34 @@ function RepoForm(props) {
   const [repo, setRepo] = useState(init.repo || '')
   const [start, setStart] = useState(init.start || 0)
   const [end, setEnd] = useState(init.end || 100)
+  const [checked, setChecked] = useState(init.com || false)
 
   return (
     <form
       onSubmit={evt => {
         evt.preventDefault()
-        onSubmit({ repo, start: +start, end: +end })
+        onSubmit({ repo, start: +start, end: +end, com: checked })
       }}
     >
-      <input value={repo} onChange={evt => setRepo(evt.target.value)} />
-      <input value={start} onChange={evt => setStart(evt.target.value)} />
-      <input value={end} onChange={evt => setEnd(evt.target.value)} />
+      <label htmlFor="repo">Repository name</label>
+      <input name="repo" value={repo} onChange={evt => setRepo(evt.target.value)} />
+
+      <label htmlFor="start">Start build</label>
+      <input name="start" value={start} onChange={evt => setStart(evt.target.value)} />
+
+      <label htmlFor="end">End build</label>
+      <input name="end" value={end} onChange={evt => setEnd(evt.target.value)} />
+
+      <label htmlFor="com">Using travis-ci.com (instead of .org)?</label>
+      <input name="com" type="checkbox" checked={checked} onChange={evt => setChecked(evt.target.checked)} />
       <button type="submit">Submit</button>
     </form>
   )
 }
 
-async function getBuilds({ repo, start, end }) {
-  const prefix = `https://api.travis-ci.org/repo/${encodeURIComponent(repo)}/builds?limit=${BUILDS_PER_REQUEST}`
+async function getBuilds({ repo, start, end, com }) {
+  const root = `https://api.travis-ci.${com ? 'com' : 'org'}`
+  const prefix = `${root}/repo/${encodeURIComponent(repo)}/builds?limit=${BUILDS_PER_REQUEST}`
   const input = []
   const limit = pLimit(1)
 
@@ -131,6 +141,7 @@ export default function App() {
     repo: StringParam,
     start: NumberParam,
     end: NumberParam,
+    com: BooleanParam,
   })
 
   const { repo, start, end } = query
@@ -138,17 +149,21 @@ export default function App() {
     if (repo && !repo.includes('/')) {
       setError('Repo should be in the form user/name')
     }
+    if (end <= start) {
+      setError('End should be greater than start')
+    }
   })
-  if (end <= start) {
-    setError('End should be greater than start')
-  }
+
   useEffect(() => {
     async function getData(query) {
-      const result = await getBuilds(query)
-      setTimeout(() => {
-        setLoading(false)
-        setDownloadedRepoData(process(result))
-      }, 100)
+      setLoading(true)
+      if (query.repo) {
+        const result = await getBuilds(query)
+        setTimeout(() => {
+          setLoading(false)
+          setDownloadedRepoData(process(result))
+        }, 100)
+      }
     }
     getData(query)
   }, [query])
@@ -157,9 +172,9 @@ export default function App() {
     console.log(err)
     return <p style={{ color: 'red' }}>{err.error}</p>
   }
-  console.log(downloadedRepoData)
   return (
     <>
+      <h1>travigraph-js - Travis-CI duration graph</h1>
       <RepoForm
         init={query}
         onSubmit={res => {
