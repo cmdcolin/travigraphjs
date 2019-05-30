@@ -1,3 +1,7 @@
+## [1.0.4](https://github.com/cmdcolin/travigraphjs/compare/1.0.3...1.0.4) (2019-05-30)
+
+
+
 - Added aborting
 - Added example button
 - Added local storage cache

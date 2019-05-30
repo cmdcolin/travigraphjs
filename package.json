@@ -1,6 +1,6 @@
 {
   "name": "travigraphjs",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A simple tool to plot travis-CI build times: https://cmdcolin.github.io/travigraphjs",
   "main": "index.js",
   "scripts": {
@@ -59,10 +59,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "abortable-promise-cache": "^1.0.1",
+    "fetch-mock": "^7.3.3",
     "lscache": "^1.3.0",
     "prop-types": "^15.7.2",
     "quick-lru": "^4.0.0",
-    "fetch-mock": "^7.3.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hooks-async": "^2.1.0",
