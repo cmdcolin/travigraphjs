@@ -7,7 +7,9 @@
     "test": "jest",
     "lint": "eslint src",
     "build": "BABEL_ENV=production webpack",
-    "start": "BABEL_ENV=development webpack-dev-server"
+    "start": "BABEL_ENV=development webpack-dev-server",
+    "preversion": "npm run lint && npm test && npm run build",
+    "version": "standard-changelog && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -46,6 +48,7 @@
     "jest": "^24.8.0",
     "jest-canvas-mock": "^2.0.0",
     "prettier": "^1.17.0",
+    "standard-changelog": "^2.0.11",
     "style-loader": "^0.23.1",
     "typescript": "^3.4.5",
     "vega": "^5.3.5",
