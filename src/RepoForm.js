@@ -14,13 +14,25 @@ export function RepoForm(props) {
       }}
     >
       <label htmlFor="repo">Repository name</label>
-      <input name="repo" value={repo} onChange={evt => setState({ ...state, repo: evt.target.value })} />
+      <input
+        name="repo"
+        value={repo}
+        onChange={evt => setState({ ...state, repo: evt.target.value })}
+      />
 
       <label htmlFor="start">Start build</label>
-      <input name="start" value={start} onChange={evt => setState({ ...state, start: evt.target.value })} />
+      <input
+        name="start"
+        value={start}
+        onChange={evt => setState({ ...state, start: evt.target.value })}
+      />
 
       <label htmlFor="end">End build</label>
-      <input name="end" value={end} onChange={evt => setState({ ...state, end: evt.target.value })} />
+      <input
+        name="end"
+        value={end}
+        onChange={evt => setState({ ...state, end: evt.target.value })}
+      />
 
       <label htmlFor="com">Using travis-ci.com (instead of .org)?</label>
       <input
@@ -41,7 +53,12 @@ export function RepoForm(props) {
       <button
         onClick={evt => {
           evt.preventDefault()
-          const s = { repo: 'facebook/create-react-app', start: 0, end: 500, com: false }
+          const s = {
+            repo: 'facebook/create-react-app',
+            start: 0,
+            end: 500,
+            com: false,
+          }
           setState(s)
           onSubmit(s)
         }}

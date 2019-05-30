@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useQueryParams, BooleanParam, StringParam, NumberParam } from 'use-query-params'
+import {
+  useQueryParams,
+  BooleanParam,
+  StringParam,
+  NumberParam,
+} from 'use-query-params'
 import { createClassFromLiteSpec } from 'react-vega-lite'
 import AbortablePromiseCache from 'abortable-promise-cache'
 import LSCache from 'lscache'
@@ -125,7 +130,10 @@ export default function App() {
     query => {
       const { repo, start, end } = query || {}
       if (repo && !repo.includes('/')) {
-        setState({ ...blankState(), error: 'Repo should be in the form user/name' })
+        setState({
+          ...blankState(),
+          error: 'Repo should be in the form user/name',
+        })
       }
       if (end <= start) {
         setState({ ...blankState(), error: 'End should be greater than start' })
@@ -138,11 +146,18 @@ export default function App() {
     async function getData(query) {
       try {
         if (loading && query && query.repo) {
-          setState({ ...state, loading: `Loading...build ${counter * BUILDS_PER_REQUEST}` })
+          setState({
+            ...state,
+            loading: `Loading...build ${counter * BUILDS_PER_REQUEST}`,
+          })
           const url = getBuilds({ ...query, counter })
           if (url) {
             const headers = new Headers({ 'Travis-API-Version': '3' })
-            const result = await cache.get(url, { url, headers }, controller.signal)
+            const result = await cache.get(
+              url,
+              { url, headers },
+              controller.signal,
+            )
             setState({
               ...state,
               counter: counter + 1,
@@ -152,7 +167,11 @@ export default function App() {
           } else if (!builds.length) {
             setState({ ...blankState(), error: 'No builds loaded' })
           } else {
-            setState({ ...state, loading: null, downloaded: { values: builds } })
+            setState({
+              ...state,
+              loading: null,
+              downloaded: { values: builds },
+            })
           }
         }
       } catch (e) {
@@ -172,8 +191,9 @@ export default function App() {
     <>
       <h1>travigraph-js - Travis-CI duration graph</h1>
       <p>
-        Enter a repo name, the start build, and end build to query for. Also specify whether this is on travis-ci.com
-        instead of .org with the checkbox. NOTE: The repository name is case sensitive!
+        Enter a repo name, the start build, and end build to query for. Also
+        specify whether this is on travis-ci.com instead of .org with the
+        checkbox. NOTE: The repository name is case sensitive!
       </p>
       <RepoForm
         init={query}
