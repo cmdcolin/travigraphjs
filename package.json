@@ -72,6 +72,9 @@
     "vega-lite": "^3.2.1"
   },
   "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
     "setupFiles": [
       "jest-canvas-mock"
     ]
