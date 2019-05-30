@@ -1,4 +1,4 @@
-## [1.0.4](https://github.com/cmdcolin/travigraphjs/compare/1.0.3...1.0.4) (2019-05-30)
+## [1.0.4](https://github.com/cmdcolin/travigraphjs/compare/v1.0.3...v1.0.4) (2019-05-30)
 
 
 
@@ -6,7 +6,7 @@
 - Added example button
 - Added local storage cache
 
-## Version 1.0.3 - May 5th, 2019
+## [1.0.3](https://github.com/cmdcolin/travigraphjs/compare/v1.0.2...v1.0.3) (2019-05-05)
 
 ### Features
 
@@ -15,7 +15,7 @@
 - Implements 1-request-at-a-time fetching to be nice to travis
 - Adds support for travis-ci.com
 
-## Version 1.0.2 - April 9th, 2018
+## [1.0.2](https://github.com/cmdcolin/travigraphjs/compare/v1.0.1...v1.0.2) (2019-04-09)
 
 ### Features
 
@@ -36,13 +36,13 @@
 
 
 
-## Version 1.0.1 - February 6th, 2018
+## [1.0.1](https://github.com/cmdcolin/travigraphjs/compare/v1.0.0...v1.0.1) (2019-02-06)
 
 ### Features
 
 - Add mouseover
 
-## Version 1.0.0 - April 8th, 2017
+## 1.0.0 (2017-04-08)
 
 Initial release!
 
