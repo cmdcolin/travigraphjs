@@ -7,7 +7,6 @@ import {
 } from 'use-query-params'
 import { createClassFromLiteSpec } from 'react-vega-lite'
 import AbortablePromiseCache from 'abortable-promise-cache'
-import LSCache from 'lscache'
 import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
 import { RepoForm } from './RepoForm'
@@ -18,40 +17,31 @@ import './App.css'
 //setFixtures()
 
 const BUILDS_PER_REQUEST = 100
-LSCache.setExpiryMilliseconds(3600000)
 
 const cache = new AbortablePromiseCache({
   cache: new QuickLRU({ maxSize: 1000 }),
   async fill(requestData, signal) {
     const { url, headers } = requestData
-    const ret = LSCache.get(url)
-    return (
-      ret ||
-      tenaciousFetch(url, { headers, signal })
-        .then(res => {
-          if (res.ok) {
-            return res.json()
-          } else {
-            throw new Error(`failed http status ${res.status}`)
-          }
-        })
-        .then(res => res.builds)
-        .then(data =>
-          data.map(m => ({
-            message: (m.commit || {}).message,
-            branch: (m.branch || {}).name,
-            duration: m.duration / 60,
-            number: m.number,
-            finished_at: m.finished_at,
-            state: m.state,
-          })),
-        )
-        .then(data => filterOutliers(data))
-        .then(data => {
-          LSCache.set(url, data)
-          return data
-        })
-    )
+    return tenaciousFetch(url, { headers, signal })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          throw new Error(`failed http status ${res.status}`)
+        }
+      })
+      .then(res => res.builds)
+      .then(data =>
+        data.map(m => ({
+          message: (m.commit || {}).message,
+          branch: (m.branch || {}).name,
+          duration: m.duration / 60,
+          number: m.number,
+          finished_at: m.finished_at,
+          state: m.state,
+        })),
+      )
+      .then(data => filterOutliers(data))
   },
 })
 

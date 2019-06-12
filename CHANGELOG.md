@@ -1,3 +1,5 @@
+- Remove lscache due to unpredictability
+
 ## [1.0.4](https://github.com/cmdcolin/travigraphjs/compare/v1.0.3...v1.0.4) (2019-05-30)
 
 
