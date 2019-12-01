@@ -5,7 +5,7 @@ import {
   StringParam,
   NumberParam,
 } from 'use-query-params'
-import { createClassFromLiteSpec } from 'react-vega-lite'
+import { VegaLite } from 'react-vega'
 import AbortablePromiseCache from 'abortable-promise-cache'
 import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
@@ -18,38 +18,12 @@ import './App.css'
 
 const BUILDS_PER_REQUEST = 100
 
-const cache = new AbortablePromiseCache({
-  cache: new QuickLRU({ maxSize: 1000 }),
-  async fill(requestData, signal) {
-    const { url, headers } = requestData
-    return tenaciousFetch(url, { headers, signal })
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          throw new Error(`failed http status ${res.status}`)
-        }
-      })
-      .then(res => res.builds)
-      .then(data =>
-        data.map(m => ({
-          message: (m.commit || {}).message,
-          branch: (m.branch || {}).name,
-          duration: m.duration / 60,
-          number: m.number,
-          finished_at: m.finished_at,
-          state: m.state,
-        })),
-      )
-      .then(data => filterOutliers(data))
-  },
-})
-
-const LineChart = createClassFromLiteSpec('LineChart', {
-  $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
+const spec = {
+  $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
   width: 1000,
   height: 400,
   mark: 'point',
+  data: { name: 'values' },
   selection: {
     grid: {
       type: 'interval',
@@ -83,6 +57,28 @@ const LineChart = createClassFromLiteSpec('LineChart', {
         range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
       },
     },
+  },
+}
+
+const cache = new AbortablePromiseCache({
+  cache: new QuickLRU({ maxSize: 1000 }),
+  async fill(requestData, signal) {
+    const { url, headers } = requestData
+    const ret = await tenaciousFetch(url, { headers, signal })
+    if (!ret.ok) {
+      throw new Error(`failed http status ${ret.status}`)
+    }
+    const json = await ret.json()
+    return filterOutliers(
+      json.builds.map(m => ({
+        message: (m.commit || {}).message,
+        branch: (m.branch || {}).name,
+        duration: m.duration / 60,
+        number: m.number,
+        finished_at: m.finished_at,
+        state: m.state,
+      })),
+    )
   },
 })
 
@@ -160,7 +156,7 @@ export default function App() {
             setState({
               ...state,
               loading: null,
-              downloaded: { values: builds },
+              downloaded: builds,
             })
           }
         }
@@ -208,7 +204,7 @@ export default function App() {
       />
       {loading && <p>{loading}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {downloaded && <LineChart data={downloaded} />}
+      {downloaded && <VegaLite data={{ values: downloaded }} spec={spec} />}
       <a href="https://github.com/cmdcolin/travigraphjs/">travigraph@GitHub</a>
     </>
   )

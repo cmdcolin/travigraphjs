@@ -1,4 +1,8 @@
-## [1.0.5](https://github.com/cmdcolin/travigraphjs/compare/v1.0.3...v1.0.5) (2019-06-12)
+## [1.0.6](https://github.com/cmdcolin/travigraphjs/compare/v1.0.5...v1.0.6) (2019-12-01)
+
+- Make the basis of the app use create-react-app
+
+## [1.0.5](https://github.com/cmdcolin/travigraphjs/compare/v1.0.4...v1.0.5) (2019-06-12)
 
 
 
