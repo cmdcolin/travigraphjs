@@ -12,7 +12,7 @@ export function filterOutliers(someArray = [], elt) {
   const minValue = q1 - iqr * 3
 
   const filteredValues = values.filter(
-    x => x.duration < maxValue && x.duration > minValue,
+    x => x.duration < maxValue && x.duration > minValue && !!x.finished_at,
   )
 
   return filteredValues
