@@ -88,37 +88,19 @@ function getBuilds({ counter, repo, start, end, com }) {
   return offset <= end ? url : undefined
 }
 
-const blankState = () => {
-  return {
-    loading: null,
-    error: null,
-    downloaded: null,
-    controller: new AbortController(),
-    counter: 0,
-    builds: [],
-  }
-}
-export default function App() {
-  const [state, setState] = useState(blankState())
-
-  const [query, setQuery] = useQueryParams({
-    repo: StringParam,
-    start: NumberParam,
-    end: NumberParam,
-    com: BooleanParam,
-  })
-  const { counter, controller, builds, loading, downloaded, error } = state
+function useTravisCI(signal, query) {
+  const [counter, setCounter] = useState(0)
+  const [error, setError] = useState()
+  const [loading, setLoading] = useState('Enter a repo')
+  const [builds, setBuilds] = useState([])
   useEffect(
     query => {
       const { repo, start, end } = query || {}
       if (repo && !repo.includes('/')) {
-        setState({
-          ...blankState(),
-          error: 'Repo should be in the form user/name',
-        })
+        setError('Repo should be in the form user/name')
       }
       if (end <= start) {
-        setState({ ...blankState(), error: 'End should be greater than start' })
+        setError('End should be greater than start')
       }
     },
     [query]
@@ -127,48 +109,44 @@ export default function App() {
   useEffect(() => {
     async function getData(query) {
       try {
-        if (loading && query && query.repo) {
-          setState({
-            ...state,
-            loading: `Loading...build ${counter * BUILDS_PER_REQUEST}`,
-          })
+        if (query && query.repo) {
+          setLoading(`Loading build ${counter * BUILDS_PER_REQUEST}`)
           const url = getBuilds({ ...query, counter })
           if (url) {
             const headers = new Headers({ 'Travis-API-Version': '3' })
-            const result = await cache.get(
-              url,
-              { url, headers },
-              controller.signal
-            )
-            setState({
-              ...state,
-              counter: counter + 1,
-              controller: new AbortController(),
-              builds: builds.concat(result),
-            })
+            const result = await cache.get(url, { url, headers }, signal)
+            setBuilds(builds.concat(result))
+            setCounter(counter + 1)
+            setLoading(undefined)
           } else if (!builds.length) {
-            setState({ ...blankState(), error: 'No builds loaded' })
+            setError('No builds loaded')
           } else {
-            setState({
-              ...state,
-              loading: null,
-              downloaded: builds,
-            })
+            setLoading(undefined)
           }
         }
       } catch (e) {
         if (!isAbortException(e)) {
           console.error(e)
-          setState({
-            ...blankState(),
-            error: e.message,
-          })
+          setError(e.message)
         }
       }
     }
     getData(query)
-  }, [loading, query, counter, controller])
+  }, [loading, query, counter, builds, signal])
 
+  return [loading, error, builds]
+}
+export default function App() {
+  const [controller, setController] = useState(new AbortController())
+
+  const [query, setQuery] = useQueryParams({
+    repo: StringParam,
+    start: NumberParam,
+    end: NumberParam,
+    com: BooleanParam,
+  })
+
+  const [loading, error, builds] = useTravisCI(controller.signal, query)
   return (
     <>
       <h1>travigraph-js - Travis-CI duration graph</h1>
@@ -183,24 +161,23 @@ export default function App() {
           if (loading) {
             controller.abort()
           }
+          setController(new AbortController())
           setQuery(res)
-          setState({
-            ...blankState(),
-            loading: 'Loading...',
-          })
         }}
         onCancel={() => {
           if (loading) {
             controller.abort()
           }
-          setState({
-            ...blankState(),
-          })
+          setQuery(undefined)
         }}
       />
-      {loading && <p>{loading}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {downloaded && <VegaLite data={{ values: downloaded }} spec={spec} />}
+      {error ? (
+        <p style={{ color: 'red' }}>{error}</p>
+      ) : loading ? (
+        <p>{loading}</p>
+      ) : (
+        <VegaLite data={{ values: builds }} spec={spec} />
+      )}
       <a href="https://github.com/cmdcolin/travigraphjs/">travigraph@GitHub</a>
     </>
   )
