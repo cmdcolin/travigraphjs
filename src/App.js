@@ -11,6 +11,7 @@ import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
 import { RepoForm } from './RepoForm'
 import { filterOutliers, isAbortException } from './util'
+import LSCache from 'lscache'
 
 const BUILDS_PER_REQUEST = 100
 
@@ -60,21 +61,27 @@ const cache = new AbortablePromiseCache({
   cache: new QuickLRU({ maxSize: 1000 }),
   async fill(requestData, signal) {
     const { url, headers } = requestData
-    const ret = await tenaciousFetch(url, { headers, signal })
-    if (!ret.ok) {
-      throw new Error(`failed http status ${ret.status}`)
+    let res = LSCache.get(JSON.stringify(requestData))
+    if (!res) {
+      const ret = await tenaciousFetch(url, { headers, signal })
+      if (!ret.ok) {
+        throw new Error(`failed http status ${ret.status}`)
+      }
+      const json = await ret.json()
+      const result = filterOutliers(
+        json.builds.map(m => ({
+          message: (m.commit || {}).message,
+          branch: (m.branch || {}).name,
+          duration: m.duration / 60,
+          number: m.number,
+          finished_at: m.finished_at,
+          state: m.state,
+        }))
+      )
+      LSCache.set(JSON.stringify(requestData), result)
+      return result
     }
-    const json = await ret.json()
-    return filterOutliers(
-      json.builds.map(m => ({
-        message: (m.commit || {}).message,
-        branch: (m.branch || {}).name,
-        duration: m.duration / 60,
-        number: m.number,
-        finished_at: m.finished_at,
-        state: m.state,
-      }))
-    )
+    return res
   },
 })
 
@@ -117,7 +124,6 @@ function useTravisCI(signal, query) {
             const result = await cache.get(url, { url, headers }, signal)
             setBuilds(builds.concat(result))
             setCounter(counter + 1)
-            setLoading(undefined)
           } else if (!builds.length) {
             setError('No builds loaded')
           } else {
@@ -138,7 +144,6 @@ function useTravisCI(signal, query) {
 }
 export default function App() {
   const [controller, setController] = useState(new AbortController())
-
   const [query, setQuery] = useQueryParams({
     repo: StringParam,
     start: NumberParam,
@@ -168,7 +173,6 @@ export default function App() {
           if (loading) {
             controller.abort()
           }
-          setQuery(undefined)
         }}
       />
       {error ? (
