@@ -111,7 +111,7 @@ function useTravisCI(signal, query) {
     'Travis-API-Version': '3',
   }
   if (query.token) {
-    h.Authorization = 'token' + query.token
+    h.Authorization = 'token ' + query.token
   }
   const headers = new Headers(h)
 
