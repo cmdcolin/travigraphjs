@@ -179,8 +179,8 @@ export default function App() {
     <>
       <h1>travigraph-js - Travis-CI duration graph</h1>
       <p>
-        Enter a repo name, the start build, and end build to query for. Also
-        specify whether this is on travis-ci.com instead of .org with the
+        Enter a repo name and optionally an authorization token, used for private repos
+        Also specify whether this is on travis-ci.com or travis-ci.org with the
         checkbox. NOTE: The repository name is case sensitive!
       </p>
       <RepoForm
