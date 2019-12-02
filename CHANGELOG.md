@@ -1,3 +1,7 @@
+- Add localeStorage cache back
+- Add babel-eslint for proper eslint
+- Autoinfer number of builds
+
 ## [1.0.6](https://github.com/cmdcolin/travigraphjs/compare/v1.0.5...v1.0.6) (2019-12-01)
 
 - Make the basis of the app use create-react-app

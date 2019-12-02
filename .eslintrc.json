@@ -1,8 +1,9 @@
 {
   "plugins": [
+    "babel",
     "prettier",
     "react",
-    "babel"
+    "react-hooks"
   ],
   "parser": "babel-eslint",
   "extends": [
@@ -11,7 +12,9 @@
     "plugin:react/recommended"
   ],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "env": {
     "browser": true,

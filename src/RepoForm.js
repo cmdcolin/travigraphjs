@@ -1,75 +1,37 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import { useForm, useField } from 'react-final-form-hooks'
 
-export function RepoForm(props) {
-  const { onSubmit = () => {}, onCancel = () => {}, init = {} } = props
-  const [state, setState] = useState(init)
-  const { repo = '', start = '', end = '', com = false } = state
-
+export default ({ onSubmit, initialValues }) => {
+  const { form, handleSubmit, pristine, submitting } = useForm({
+    onSubmit, // the function to call with your form values upon valid submit
+    initialValues,
+  })
+  const repo = useField('repo', form)
+  const token = useField('token', form)
+  const com = useField('com', form)
   return (
-    <form
-      onSubmit={evt => {
-        evt.preventDefault()
-        onSubmit({ repo, start: +start, end: +end, com })
-      }}
-    >
-      <label htmlFor="repo">Repository name</label>
-      <input
-        name="repo"
-        value={repo}
-        onChange={evt => setState({ ...state, repo: evt.target.value })}
-      />
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Repo name</label>
+        <input {...repo.input} />
+      </div>
+      <div>
+        <label>Authorization token (only needed for private)</label>
+        <input {...token.input} />
+      </div>
+      <div>
+        <label>On travis-ci.com instead of travis-ci.org?</label>
+        <input
+          type="checkbox"
+          id={com.input.name}
+          checked={com.input.value}
+          {...com.input}
+        />
+      </div>
 
-      <label htmlFor="start">Start build</label>
-      <input
-        name="start"
-        value={start}
-        onChange={evt => setState({ ...state, start: evt.target.value })}
-      />
-
-      <label htmlFor="end">End build</label>
-      <input
-        name="end"
-        value={end}
-        onChange={evt => setState({ ...state, end: evt.target.value })}
-      />
-
-      <label htmlFor="com">Using travis-ci.com (instead of .org)?</label>
-      <input
-        name="com"
-        type="checkbox"
-        checked={com}
-        onChange={evt => setState({ ...state, com: evt.target.checked })}
-      />
-      <button type="submit">Submit</button>
-      <button
-        onClick={evt => {
-          evt.preventDefault()
-          onCancel(evt)
-        }}
-      >
-        Cancel
-      </button>
-      <button
-        onClick={evt => {
-          evt.preventDefault()
-          const s = {
-            repo: 'facebook/create-react-app',
-            start: 0,
-            end: 500,
-            com: false,
-          }
-          setState(s)
-          onSubmit(s)
-        }}
-      >
-        Example
+      <button type="submit" disabled={pristine || submitting}>
+        Submit
       </button>
     </form>
   )
-}
-RepoForm.propTypes = {
-  init: PropTypes.object,
-  onSubmit: PropTypes.func,
-  onCancel: PropTypes.func,
 }

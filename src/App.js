@@ -9,7 +9,7 @@ import { VegaLite } from 'react-vega'
 import AbortablePromiseCache from 'abortable-promise-cache'
 import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
-import { RepoForm } from './RepoForm'
+import RepoForm from './RepoForm'
 import { filterOutliers, isAbortException } from './util'
 import LSCache from 'lscache'
 
@@ -85,14 +85,19 @@ const cache = new AbortablePromiseCache({
   },
 })
 
-function getBuilds({ counter, repo, start, end, com }) {
-  //prettier-ignore
-  const root = `https://api.travis-ci.${com ? 'com' : 'org'}/repo/${encodeURIComponent(
-    repo,
-  )}/builds?limit=${BUILDS_PER_REQUEST}`
-  const offset = start + BUILDS_PER_REQUEST * counter
+function getBuilds({ counter, com, repo, end }) {
+  const root = `https://api.travis-ci.${
+    com ? 'com' : 'org'
+  }/repo/${encodeURIComponent(repo)}/builds?limit=${BUILDS_PER_REQUEST}`
+  const offset = BUILDS_PER_REQUEST * counter
   const url = `${root}&offset=${offset}&sort_by=id`
-  return offset <= end ? url : undefined
+  return offset < end ? url : undefined
+}
+
+function getNumBuilds({ com, repo }) {
+  return `https://api.travis-ci.${
+    com ? 'com' : 'org'
+  }/repo/${encodeURIComponent(repo)}/builds?limit=1&offset=-1`
 }
 
 function useTravisCI(signal, query) {
@@ -100,34 +105,52 @@ function useTravisCI(signal, query) {
   const [error, setError] = useState()
   const [loading, setLoading] = useState('Enter a repo')
   const [builds, setBuilds] = useState([])
-  useEffect(
-    query => {
-      const { repo, start, end } = query || {}
-      if (repo && !repo.includes('/')) {
-        setError('Repo should be in the form user/name')
-      }
-      if (end <= start) {
-        setError('End should be greater than start')
-      }
-    },
-    [query]
-  )
+  const [end, setEnd] = useState()
+
+  const h = {
+    'Travis-API-Version': '3',
+  }
+  if (query.token) {
+    h.Authorization = 'token' + query.token
+  }
+  const headers = new Headers(h)
 
   useEffect(() => {
-    async function getData(query) {
+    (async () => {
+      if (end === undefined) {
+        const url = getNumBuilds(query)
+
+        const res = await fetch(url, { headers })
+        const builds = (await res.json()).builds
+        if (builds && builds.length) {
+          const numBuilds = +builds[0].number
+          setEnd(numBuilds)
+        }
+      }
+    })()
+  })
+
+  useEffect(() => {
+    (async () => {
       try {
-        if (query && query.repo) {
-          setLoading(`Loading build ${counter * BUILDS_PER_REQUEST}`)
-          const url = getBuilds({ ...query, counter })
-          if (url) {
-            const headers = new Headers({ 'Travis-API-Version': '3' })
-            const result = await cache.get(url, { url, headers }, signal)
-            setBuilds(builds.concat(result))
-            setCounter(counter + 1)
-          } else if (!builds.length) {
-            setError('No builds loaded')
-          } else {
-            setLoading(undefined)
+        if (end !== undefined) {
+          if (query && query.repo) {
+            setLoading(`Loading build ${counter * BUILDS_PER_REQUEST}/${end}`)
+
+            const url = getBuilds({ ...query, counter, end })
+            if (url) {
+              const result = await cache.get(
+                JSON.stringify({ url, headers }),
+                { url, headers },
+                signal
+              )
+              setBuilds(builds.concat(result))
+              setCounter(counter + 1)
+            } else if (!builds.length) {
+              setError('No builds loaded')
+            } else {
+              setLoading(undefined)
+            }
           }
         }
       } catch (e) {
@@ -136,9 +159,8 @@ function useTravisCI(signal, query) {
           setError(e.message)
         }
       }
-    }
-    getData(query)
-  }, [loading, query, counter, builds, signal])
+    })()
+  }, [loading, query, counter, builds, signal, headers, end])
 
   return [loading, error, builds]
 }
@@ -149,6 +171,7 @@ export default function App() {
     start: NumberParam,
     end: NumberParam,
     com: BooleanParam,
+    token: StringParam,
   })
 
   const [loading, error, builds] = useTravisCI(controller.signal, query)
@@ -161,7 +184,7 @@ export default function App() {
         checkbox. NOTE: The repository name is case sensitive!
       </p>
       <RepoForm
-        init={query}
+        initialValues={query}
         onSubmit={res => {
           if (loading) {
             controller.abort()
