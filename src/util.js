@@ -1,5 +1,5 @@
 // stackoverflow
-export function filterOutliers(someArray = [], elt) {
+export function filterOutliers(someArray = []) {
   if (!someArray.length) return []
   const values = someArray.concat()
   values.sort((a, b) => a.duration - b.duration)
@@ -11,11 +11,9 @@ export function filterOutliers(someArray = [], elt) {
   const maxValue = q3 + iqr * 3
   const minValue = q1 - iqr * 3
 
-  const filteredValues = values.filter(
-    x => x.duration < maxValue && x.duration > minValue && !!x.finished_at,
+  return values.filter(
+    x => x.duration < maxValue && x.duration > minValue && !!x.finished_at
   )
-
-  return filteredValues
 }
 export function isAbortException(exception) {
   return (

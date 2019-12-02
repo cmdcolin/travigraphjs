@@ -11,10 +11,6 @@ import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
 import { RepoForm } from './RepoForm'
 import { filterOutliers, isAbortException } from './util'
-import './App.css'
-//use for debugging
-//import setFixtures from './set-fixtures'
-//setFixtures()
 
 const BUILDS_PER_REQUEST = 100
 
@@ -77,7 +73,7 @@ const cache = new AbortablePromiseCache({
         number: m.number,
         finished_at: m.finished_at,
         state: m.state,
-      })),
+      }))
     )
   },
 })
@@ -125,7 +121,7 @@ export default function App() {
         setState({ ...blankState(), error: 'End should be greater than start' })
       }
     },
-    [query],
+    [query]
   )
 
   useEffect(() => {
@@ -142,7 +138,7 @@ export default function App() {
             const result = await cache.get(
               url,
               { url, headers },
-              controller.signal,
+              controller.signal
             )
             setState({
               ...state,
