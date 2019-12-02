@@ -50,8 +50,8 @@ const spec = {
       field: 'state',
       type: 'nominal',
       scale: {
-        domain: ['failed', 'errored', 'canceled', 'passed'],
-        range: ['#d62728', '#ff7f0e', '#5ab43c', '#1f77b4'],
+        domain: ['passed', 'failed', 'errored', 'canceled'],
+        range: ['#39aa56', '#ff7f0e', '#db4545', '#9d9d9d'],
       },
     },
   },
@@ -179,9 +179,10 @@ export default function App() {
     <>
       <h1>travigraph-js - Travis-CI duration graph</h1>
       <p>
-        Enter a repo name and optionally an authorization token, used for private repos
-        Also specify whether this is on travis-ci.com or travis-ci.org with the
-        checkbox. NOTE: The repository name is case sensitive!
+        Enter a repo name and optionally an authorization token, used for
+        private repos Also specify whether this is on travis-ci.com or
+        travis-ci.org with the checkbox. NOTE: The repository name is case
+        sensitive!
       </p>
       <RepoForm
         initialValues={query}
