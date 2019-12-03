@@ -103,7 +103,9 @@ function getNumBuilds({ com, repo }) {
 function useTravisCI(signal, query) {
   const [counter, setCounter] = useState(0)
   const [error, setError] = useState()
-  const [loading, setLoading] = useState('Enter a repo')
+  const [loading, setLoading] = useState(
+    query.repo ? 'Loading...' : 'Enter a repo'
+  )
   const [builds, setBuilds] = useState([])
   const [end, setEnd] = useState()
 
@@ -117,7 +119,7 @@ function useTravisCI(signal, query) {
 
   useEffect(() => {
     (async () => {
-      if (end === undefined) {
+      if (end === undefined && query.repo !== undefined) {
         const url = getNumBuilds(query)
 
         const res = await fetch(url, { headers })
