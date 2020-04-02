@@ -19,7 +19,7 @@ const spec = {
   $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
   width: 1000,
   height: 400,
-  mark: { type: 'point', tooltip: true },
+  mark: { type: 'point', tooltip: { content: 'data' } },
   data: { name: 'values' },
   selection: {
     grid: {
@@ -68,12 +68,15 @@ const cache = new AbortablePromiseCache({
         throw new Error(`failed http status ${ret.status}`)
       }
       const json = await ret.json()
+      console.log(json)
       const result = filterOutliers(
         json.builds.map((m) => ({
-          message: (m.commit || {}).message,
+          message: (m.commit || {}).message.slice(0, 20),
           branch: (m.branch || {}).name,
           duration: m.duration / 60,
           number: m.number,
+          commit_sha: m.commit.sha,
+          compare: m.commit.compare_url,
           finished_at: m.finished_at,
           state: m.state,
         }))
@@ -118,7 +121,7 @@ function useTravisCI(signal, query) {
   const headers = new Headers(h)
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       if (end === undefined && query.repo !== undefined) {
         const url = getNumBuilds(query)
 
@@ -133,7 +136,7 @@ function useTravisCI(signal, query) {
   })
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
         if (end !== undefined) {
           if (query && query.repo) {

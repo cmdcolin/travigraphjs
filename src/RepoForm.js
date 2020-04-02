@@ -1,7 +1,8 @@
 import React from 'react'
 import { useForm, useField } from 'react-final-form-hooks'
+import PropTypes from 'prop-types'
 
-export default ({ onSubmit, initialValues }) => {
+function RepoForm({ onSubmit, initialValues }) {
   const { form, handleSubmit, pristine, submitting } = useForm({
     onSubmit, // the function to call with your form values upon valid submit
     initialValues,
@@ -35,3 +36,9 @@ export default ({ onSubmit, initialValues }) => {
     </form>
   )
 }
+RepoForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({}).isRequired,
+}
+
+export default RepoForm
