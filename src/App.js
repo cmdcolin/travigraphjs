@@ -19,7 +19,7 @@ const spec = {
   $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
   width: 1000,
   height: 400,
-  mark: 'point',
+  mark: { type: 'point', tooltip: true },
   data: { name: 'values' },
   selection: {
     grid: {
@@ -69,7 +69,7 @@ const cache = new AbortablePromiseCache({
       }
       const json = await ret.json()
       const result = filterOutliers(
-        json.builds.map(m => ({
+        json.builds.map((m) => ({
           message: (m.commit || {}).message,
           branch: (m.branch || {}).name,
           duration: m.duration / 60,
@@ -188,7 +188,7 @@ export default function App() {
       </p>
       <RepoForm
         initialValues={query}
-        onSubmit={res => {
+        onSubmit={(res) => {
           if (loading) {
             controller.abort()
           }
