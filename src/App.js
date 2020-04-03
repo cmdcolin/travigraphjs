@@ -11,7 +11,6 @@ import QuickLRU from 'quick-lru'
 import tenaciousFetch from 'tenacious-fetch'
 import RepoForm from './RepoForm'
 import { filterOutliers, isAbortException } from './util'
-import LSCache from 'lscache'
 
 const BUILDS_PER_REQUEST = 100
 
@@ -61,30 +60,24 @@ const cache = new AbortablePromiseCache({
   cache: new QuickLRU({ maxSize: 1000 }),
   async fill(requestData, signal) {
     const { url, headers } = requestData
-    let res = LSCache.get(JSON.stringify(requestData))
-    if (!res) {
-      const ret = await tenaciousFetch(url, { headers, signal })
-      if (!ret.ok) {
-        throw new Error(`failed http status ${ret.status}`)
-      }
-      const json = await ret.json()
-      console.log(json)
-      const result = filterOutliers(
-        json.builds.map((m) => ({
-          message: (m.commit || {}).message.slice(0, 20),
-          branch: (m.branch || {}).name,
-          duration: m.duration / 60,
-          number: m.number,
-          commit_sha: m.commit.sha,
-          compare: m.commit.compare_url,
-          finished_at: m.finished_at,
-          state: m.state,
-        }))
-      )
-      LSCache.set(JSON.stringify(requestData), result)
-      return result
+    const ret = await tenaciousFetch(url, { headers, signal })
+    if (!ret.ok) {
+      throw new Error(`failed http status ${ret.status}`)
     }
-    return res
+    const json = await ret.json()
+    const result = filterOutliers(
+      json.builds.map((m) => ({
+        message: (m.commit || {}).message.slice(0, 20),
+        branch: (m.branch || {}).name,
+        duration: m.duration / 60,
+        number: m.number,
+        commit_sha: m.commit.sha,
+        compare: m.commit.compare_url,
+        finished_at: m.finished_at,
+        state: m.state,
+      }))
+    )
+    return result
   },
 })
 
