@@ -56,6 +56,48 @@ const spec = {
   },
 }
 
+const queueSpec = {
+  $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+  width: 1000,
+  height: 400,
+  mark: { type: 'point', tooltip: { content: 'data' } },
+  data: { name: 'values' },
+  selection: {
+    grid: {
+      type: 'interval',
+      bind: 'scales',
+    },
+  },
+  encoding: {
+    y: {
+      field: 'queue',
+      type: 'quantitative',
+      axis: {
+        title: 'Queue time (minutes)',
+      },
+    },
+    x: {
+      field: 'finished_at',
+      timeUnit: 'yearmonthdatehoursminutes',
+      type: 'temporal',
+      scale: {
+        nice: 'week', // add some padding/niceness to domain
+      },
+      axis: {
+        title: 'Date',
+      },
+    },
+    color: {
+      field: 'state',
+      type: 'nominal',
+      scale: {
+        domain: ['passed', 'failed', 'errored', 'canceled'],
+        range: ['#39aa56', '#ff7f0e', '#db4545', '#9d9d9d'],
+      },
+    },
+  },
+}
+
 const cache = new AbortablePromiseCache({
   cache: new QuickLRU({ maxSize: 1000 }),
   async fill(requestData, signal) {
@@ -66,16 +108,26 @@ const cache = new AbortablePromiseCache({
     }
     const json = await ret.json()
     const result = filterOutliers(
-      json.builds.map((m) => ({
-        message: (m.commit || {}).message.slice(0, 20),
-        branch: (m.branch || {}).name,
-        duration: m.duration / 60,
-        number: m.number,
-        commit_sha: m.commit.sha,
-        compare: m.commit.compare_url,
-        finished_at: m.finished_at,
-        state: m.state,
-      }))
+      json.builds.map((m) => {
+        const queue =
+          m.started_at && m.commit.committed_at
+            ? (new Date(m.updated_at || m.started_at) -
+                new Date(m.commit.committed_at)) /
+              60000
+            : 0
+        console.log(m)
+        return {
+          message: (m.commit || {}).message.slice(0, 20),
+          branch: (m.branch || {}).name,
+          duration: m.duration / 60,
+          queue: queue > 500 ? 0 : queue,
+          number: m.number,
+          commit_sha: m.commit.sha,
+          compare: m.commit.compare_url,
+          finished_at: m.finished_at,
+          state: m.state,
+        }
+      })
     )
     return result
   },
@@ -169,6 +221,7 @@ export default function App() {
     start: NumberParam,
     end: NumberParam,
     com: BooleanParam,
+    queue: BooleanParam,
     token: StringParam,
   })
 
@@ -202,7 +255,10 @@ export default function App() {
       ) : loading ? (
         <p>{loading}</p>
       ) : (
-        <VegaLite data={{ values: builds }} spec={spec} />
+        <VegaLite
+          data={{ values: builds }}
+          spec={query.queue ? queueSpec : spec}
+        />
       )}
       <a href="https://github.com/cmdcolin/travigraphjs/">travigraph@GitHub</a>
     </>

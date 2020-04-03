@@ -10,6 +10,7 @@ function RepoForm({ onSubmit, initialValues }) {
   const repo = useField('repo', form)
   const token = useField('token', form)
   const com = useField('com', form)
+  const queue = useField('queue', form)
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -27,6 +28,15 @@ function RepoForm({ onSubmit, initialValues }) {
           id={com.input.name}
           checked={com.input.value}
           {...com.input}
+        />
+      </div>
+      <div>
+        <label>View queue time instead of build duration?</label>
+        <input
+          type="checkbox"
+          id={queue.input.name}
+          checked={queue.input.value}
+          {...queue.input}
         />
       </div>
 
