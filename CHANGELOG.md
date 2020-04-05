@@ -1,4 +1,7 @@
-- Add localeStorage cache back
+## [1.1.0]
+
+- Add build details on click
+- Add tooltip
 - Add babel-eslint for proper eslint
 - Autoinfer number of builds
 
