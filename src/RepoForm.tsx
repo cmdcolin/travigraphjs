@@ -2,7 +2,13 @@ import React from 'react'
 import { useForm, useField } from 'react-final-form-hooks'
 import PropTypes from 'prop-types'
 
-function RepoForm({ onSubmit, initialValues }) {
+function RepoForm({
+  onSubmit,
+  initialValues,
+}: {
+  onSubmit: any
+  initialValues: any
+}) {
   const { form, handleSubmit, pristine, submitting } = useForm({
     onSubmit, // the function to call with your form values upon valid submit
     initialValues,

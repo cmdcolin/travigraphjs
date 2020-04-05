@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react'
 import {
   useQueryParams,
@@ -15,8 +16,8 @@ import { filterOutliers, isAbortException } from './util'
 const BUILDS_PER_REQUEST = 100
 
 const cache = new AbortablePromiseCache({
-  cache: new QuickLRU({ maxSize: 1000 }),
-  async fill(requestData, signal) {
+  cache: new QuickLRU({ maxSize: 1000 }) as any,
+  async fill(requestData: { url: string; headers: any }, signal) {
     const { url, headers } = requestData
     const ret = await tenaciousFetch(url, { headers, signal })
     if (!ret.ok) {
@@ -24,11 +25,11 @@ const cache = new AbortablePromiseCache({
     }
     const json = await ret.json()
     const result = filterOutliers(
-      json.builds.map((m) => {
+      json.builds.map((m: any) => {
         const queue =
           m.started_at && m.commit.committed_at
-            ? (new Date(m.updated_at || m.started_at) -
-                new Date(m.commit.committed_at)) /
+            ? (+new Date(m.updated_at || m.started_at) -
+                +new Date(m.commit.committed_at)) /
               60000
             : 0
         return {
@@ -49,7 +50,17 @@ const cache = new AbortablePromiseCache({
   },
 })
 
-function getBuilds({ counter, com, repo, end }) {
+function getBuilds({
+  counter,
+  com,
+  repo,
+  end,
+}: {
+  counter: number
+  com: boolean
+  repo: string
+  end: number
+}) {
   const root = `https://api.travis-ci.${
     com ? 'com' : 'org'
   }/repo/${encodeURIComponent(repo)}/builds?limit=${BUILDS_PER_REQUEST}`
@@ -58,28 +69,26 @@ function getBuilds({ counter, com, repo, end }) {
   return offset < end ? url : undefined
 }
 
-function getNumBuilds({ com, repo }) {
+function getNumBuilds({ com, repo }: { com: boolean; repo: string }) {
   return `https://api.travis-ci.${
     com ? 'com' : 'org'
   }/repo/${encodeURIComponent(repo)}/builds?limit=1&offset=-1`
 }
 
-function useTravisCI(signal, query) {
+function useTravisCI(signal: AbortSignal, query: any) {
   const [counter, setCounter] = useState(0)
-  const [error, setError] = useState()
-  const [loading, setLoading] = useState(
+  const [error, setError] = useState<string | undefined>()
+  const [loading, setLoading] = useState<string | undefined>(
     query.repo ? 'Loading...' : 'Enter a repo'
   )
-  const [builds, setBuilds] = useState([])
-  const [end, setEnd] = useState()
+  const [builds, setBuilds] = useState<any[]>([])
+  const [end, setEnd] = useState<number | undefined>()
 
-  const h = {
+  //@ts-ignore
+  const headers = new Headers({
     'Travis-API-Version': '3',
-  }
-  if (query.token) {
-    h.Authorization = 'token ' + query.token
-  }
-  const headers = new Headers(h)
+    Authorization: query.token ? 'token ' + query.token : undefined,
+  })
 
   useEffect(() => {
     ;(async () => {
@@ -131,7 +140,16 @@ function useTravisCI(signal, query) {
   return [loading, error, builds]
 }
 
-function BuildDetails({ build, repo, com }) {
+function BuildDetails({
+  build,
+  repo,
+  com,
+}: {
+  build: any
+  repo: string | undefined
+  com: string
+}) {
+  if (!repo) return null
   return (
     <table>
       <thead>
@@ -149,7 +167,7 @@ function BuildDetails({ build, repo, com }) {
               <tr key={key + '_' + value}>
                 <td>{String(key)}</td>
                 <td>
-                  <a target="_blank" href={link}>
+                  <a rel="noopener noreferrer" target="_blank" href={link}>
                     {link}
                   </a>
                 </td>
@@ -181,7 +199,7 @@ export default function App() {
   })
 
   const [loading, error, builds] = useTravisCI(controller.signal, query)
-  const [clickedBuild, setClickedBuild] = useState(undefined)
+  const [clickedBuild, setClickedBuild] = useState<any>(undefined)
   return (
     <>
       <h1>travigraph-js - Travis-CI duration graph</h1>
@@ -200,11 +218,6 @@ export default function App() {
           setController(new AbortController())
           setQuery(res)
         }}
-        onCancel={() => {
-          if (loading) {
-            controller.abort()
-          }
-        }}
       />
       {error ? (
         <p style={{ color: 'red' }}>{error}</p>
@@ -215,6 +228,7 @@ export default function App() {
           <VegaLite
             data={{ values: builds }}
             patch={(spec) => {
+              //@ts-ignore
               spec.signals.push({
                 name: 'barClick',
                 value: 0,

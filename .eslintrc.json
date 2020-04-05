@@ -1,21 +1,22 @@
 {
   "plugins": [
-    "babel",
-    "prettier",
-    "react",
-    "react-hooks"
+    "@typescript-eslint",
+    "prettier"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "prettier",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "prettier/@typescript-eslint"
   ],
   "rules": {
     "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "no-extra-semi": 0
+    "no-extra-semi": 0,
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/camelcase": "off"
   },
   "env": {
     "browser": true,
