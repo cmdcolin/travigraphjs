@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+tr {
+  background: #ccc;
+  border: 3px solid black;
+}
+tr:nth-of-type(even) {
+  background: #eee;
+}
